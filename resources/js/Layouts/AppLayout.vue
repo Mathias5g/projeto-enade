@@ -5,32 +5,49 @@
         <jet-banner />
 
         <div class="w-full grid grid-cols-4 min-h-screen bg-gray-100">
-            <nav class="col-span-1 bg-white border-b border-gray-100">
+            <nav class="col-span-1 bg-white h-full border border-black">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
+                    <div class="flex justify-between">
+                        <div class="flex flex-col w-full">
                             <!-- Navigation Links -->
-                            <div class="flex flex-col space-x-8 sm:-my-px sm:ml-10">
-                                <jet-nav-link :href="route('dashboard')">
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Questões</h1>
+                                <jet-nav-link :href="route('questoes.create')" class="font-semibold">
                                     - Incluir Questão
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('dashboard')">
+                                <jet-nav-link :href="route('questoes.index')" class="font-semibold">
                                     - Listar Questões
                                 </jet-nav-link>
+                            </div>
 
-                                <jet-nav-link :href="route('dashboard')">
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Concursos</h1>
+                                <jet-nav-link :href="route('concursos.create')" class="font-semibold">
                                     - Incluir Concurso
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('dashboard')">
+                                <jet-nav-link :href="route('concursos.index')" class="font-semibold">
                                     - Listar Concursos
                                 </jet-nav-link>
+                            </div>
 
-                                <jet-nav-link :href="route('dashboard')">
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Disciplinas</h1>
+                                <jet-nav-link :href="route('disciplinas.create')" class="font-semibold">
                                     - Incluir Disciplina
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('dashboard')">
-                                    - listar Disciplinas
+                                <jet-nav-link :href="route('disciplinas.index')" class="font-semibold">
+                                    - Listar Disciplinas
+                                </jet-nav-link>
+                            </div>
+
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Cursos</h1>
+                                <jet-nav-link :href="route('cursos.create')" class="font-semibold">
+                                    - Incluir Curso
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('cursos.index')" class="font-semibold">
+                                    - Incluir Cursos
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -38,7 +55,7 @@
                 </div>
             </nav>
             <!-- Page Content -->
-            <main class="col-span-3">
+            <main class="col-span-3 border border-black">
                 <slot></slot>
             </main>
         </div>
