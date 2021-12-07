@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\ConcursoController;
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\DisciplinaController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\QuestaoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,6 +29,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
+    Route::resources([
+      'cursos' => CursoController::class,
+      'questoes' => QuestaoController::class,
+      'disciplinas' => DisciplinaController::class,
+      'concursos' => ConcursoController::class,
+    ]);
+});
