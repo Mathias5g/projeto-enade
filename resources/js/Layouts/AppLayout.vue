@@ -47,7 +47,7 @@
                                     - Incluir Curso
                                 </jet-nav-link>
                                 <jet-nav-link :href="route('cursos.index')" class="font-semibold">
-                                    - Incluir Cursos
+                                    - Listar Cursos
                                 </jet-nav-link>
                             </div>
                         </div>

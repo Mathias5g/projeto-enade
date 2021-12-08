@@ -17,8 +17,8 @@ class CreateTableConcursos extends Migration
             $table->id();
             $table->string("nome_concurso");
             $table->timestamp("data_realizacao");
-            $table->timestamp("horaInicio");
-            $table->timestamp("horaTermino");
+            $table->time("horaInicio");
+            $table->time("horaTermino");
             $table->integer("tempo_duracao");
             $table->string("observacoes", 300);
             $table->timestamps();

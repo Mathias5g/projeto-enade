@@ -36,6 +36,8 @@
                             <th class="py-6 border border-black">ID</th>
                             <th class="border border-black">Concurso</th>
                             <th class="border border-black">Data da Realização</th>
+                            <th class="border border-black">Horário de Início</th>
+                            <th class="border border-black">Horário de Término</th>
                             <th class="border border-black">Duração da Prova</th>
                             <th class="border border-black">Observações</th>
                             <th class="border border-black">Ações</th>
@@ -45,8 +47,10 @@
                         <tr v-for="concurso in concursos" :key="concurso.id">
                             <td class="text-center py-4 border border-black">{{concurso.id}}</td>
                             <td class="text-center border border-black">{{concurso.nome_concurso}}</td>
-                            <td class="text-center border border-black">{{concurso.data_realizacao}}</td>
-                            <td class="text-center border border-black">{{concurso.tempo_duracao}}</td>
+                            <td class="text-center border border-black">{{formatarDataHora(concurso.data_realizacao)}}</td>
+                            <td class="text-center border border-black">{{concurso.horaInicio}}</td>
+                            <td class="text-center border border-black">{{concurso.horaTermino}}</td>
+                            <td class="text-center border border-black">{{calcularTempoDuracao(concurso.tempo_duracao)}}</td>
                             <td class="text-center border border-black">{{concurso.observacoes}}</td>
                             <td class="text-center border border-black">
                                 <p>Alterar</p>
@@ -64,11 +68,21 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import moment from 'moment'
 
+moment.locale("pt-br");
 export default defineComponent({
     props: ['concursos'],
     components: {
         AppLayout,
     },
+    methods: {
+        formatarDataHora(value) {
+            return moment(value).format("dddd, D [de] MMMM [de] YYYY")
+        },
+        calcularTempoDuracao(value) {
+            return moment.utc().startOf('day').add(value, 'minutes').format('hh [horas e] mm [minutos]')
+        }
+    }
 })
 </script>

@@ -14,11 +14,11 @@
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora de Inicío:</p>
-                            <input type="datetime-local" class="w-3/4" v-model="form.horaInicio">
+                            <input type="time" class="w-3/4" v-model="form.horaInicio">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora do Término:</p>
-                            <input type="datetime-local" class="w-3/4" v-model="form.horaTermino">
+                            <input type="time" class="w-3/4" v-model="form.horaTermino">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Duração da Prova:</p>
@@ -62,7 +62,7 @@ export default {
     methods: {
         async formSubmit() {
             await Inertia.post(route('concursos.store'), this.form)
-        }
+        },
     }
 }
 </script>
