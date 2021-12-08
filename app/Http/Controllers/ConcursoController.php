@@ -38,6 +38,14 @@ class ConcursoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nome_concurso' => 'required',
+            'data_realizacao' => 'required',
+            'horaInicio' => 'required',
+            'horaTermino' => 'required',
+            'tempo_duracao' => 'required',
+            'observacoes' => 'required',
+        ]);
         Concurso::create($request->all());
         return Redirect::route('concursos.index');
     }

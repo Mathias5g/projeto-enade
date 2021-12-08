@@ -3,6 +3,9 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div v-show="errors" id="erros">
+                        <p v-for="error in errors" class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{error}}</p>
+                    </div>
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div v-show="true == false" class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">ID da Questão:</p>
@@ -15,7 +18,7 @@
                             </select>
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
-                            <p class="mx-2 font-semibold text-sm">Ano do Questão:</p>
+                            <p class="mx-2 font-semibold text-sm">Ano da Questão:</p>
                             <input type="date" class="w-3/4" v-model="form.ano_questao">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
@@ -81,6 +84,14 @@
                                     <p class="mr-2">F</p>
                                     <input type="radio" name="alternativa" value="F" v-model="form.alternativa">
                                 </div>
+                                <div class="flex items-center w-1/3 my-3">
+                                    <p class="mr-2">Verdadeiro</p>
+                                    <input type="radio" name="alternativa" value="Verdadeiro" v-model="form.alternativa">
+                                </div>
+                                <div class="flex items-center w-1/3 my-3">
+                                    <p class="mr-2">Falso</p>
+                                    <input type="radio" name="alternativa" value="Falso" v-model="form.alternativa">
+                                </div>
                             </div>
                             <div class="self-end">
                                 <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
@@ -99,7 +110,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
-    props: ['cursos', 'concursos', 'disciplinas'],
+    props: ['errors', 'cursos', 'concursos', 'disciplinas'],
     components: {
         AppLayout
     },

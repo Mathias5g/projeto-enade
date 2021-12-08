@@ -40,10 +40,11 @@ class DisciplinaController extends Controller
      */
     public function store(Request $request)
     {
-        Disciplina::create([
-            "nome_disciplina" => $request->nome_disciplina,
-            "curso_id" => $request->curso_id
+        $request->validate([
+           'nome_disciplina' => 'required',
+           'curso_id' => 'required'
         ]);
+        Disciplina::create($request->all());
         return Redirect::route('disciplinas.index');
     }
 

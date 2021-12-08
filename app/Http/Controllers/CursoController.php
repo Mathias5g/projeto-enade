@@ -39,6 +39,9 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nome_curso' => 'required'
+        ]);
         Curso::create($request->all());
         return Redirect::route('cursos.index');
     }

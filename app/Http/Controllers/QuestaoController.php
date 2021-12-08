@@ -55,6 +55,17 @@ class QuestaoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'numero_questao' => 'required',
+            'tipo_questao' => 'required',
+            'grau_dificuldade' => 'required',
+            'ano_questao' => 'required',
+            'pergunta' => 'required',
+            'resposta' => 'required',
+            'alternativa' => 'required',
+            'concurso_id' => 'required',
+            'disciplina_id' => 'required'
+        ]);
         Questao::create($request->all());
         return Redirect::route('questoes.index');
     }

@@ -3,6 +3,9 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div v-show="errors" id="erros">
+                        <p v-for="error in errors" class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{error}}</p>
+                    </div>
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Nome do Concurso:</p>
@@ -14,11 +17,11 @@
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora de Inicío:</p>
-                            <input type="time" class="w-3/4" v-model="form.horaInicio">
+                            <input type="time" class="w-3/4" v-model="form.hora_inicio">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora do Término:</p>
-                            <input type="time" class="w-3/4" v-model="form.horaTermino">
+                            <input type="time" class="w-3/4" v-model="form.hora_termino">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Duração da Prova:</p>
@@ -44,6 +47,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
+    props: ['errors'],
     components: {
         AppLayout
     },
@@ -52,8 +56,8 @@ export default {
             form: {
                 nome_concurso: null,
                 data_realizacao: null,
-                horaInicio: null,
-                horaTermino: null,
+                hora_inicio: null,
+                hora_termino: null,
                 tempo_duracao: null,
                 observacoes: null
             }

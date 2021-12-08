@@ -3,6 +3,9 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div v-show="errors" id="erros">
+                        <p v-for="error in errors" class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{error}}</p>
+                    </div>
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Nome do Curso:</p>
@@ -24,6 +27,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
+    props: ['errors'],
     components: {
         AppLayout
     },
