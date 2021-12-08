@@ -126,7 +126,7 @@ export default {
                 alternativa: null,
                 concurso_id: 'SELECIONE',
                 disciplina_id: 'SELECIONE'
-            }
+            },
         }
     },
     methods: {

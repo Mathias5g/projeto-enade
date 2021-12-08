@@ -8,7 +8,6 @@ use App\Models\Disciplina;
 use App\Models\Questao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 
 class QuestaoController extends Controller

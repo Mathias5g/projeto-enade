@@ -5,6 +5,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\QuestaoController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,4 +38,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
       'disciplinas' => DisciplinaController::class,
       'concursos' => ConcursoController::class,
     ]);
+
+    Route::post('/pesquisa/questoes', [SearchController::class, 'questoes'])->name('pesquisas.questoes');
+    Route::post('/pesquisa/concursos', [SearchController::class, 'concursos'])->name('pesquisas.concursos');
+    Route::post('/pesquisa/disciplinas', [SearchController::class, 'disciplinas'])->name('pesquisas.disciplinas');
+    Route::post('/pesquisa/cursos', [SearchController::class, 'cursos'])->name('pesquisas.cursos');
 });

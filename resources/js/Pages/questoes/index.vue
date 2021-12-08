@@ -12,21 +12,19 @@
                     <div id="filtro" class="flex flex-col m-4">
                         <div class="flex justify-between my-3">
                             <p class="text-red-600 italic underline font-semibold">Filtros:</p>
-                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Pesquisar
+                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handlePesquisa">Pesquisar
                             </button>
                         </div>
                         <div class="flex flex-wrap justify-between">
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Concurso:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="">SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.concurso">
                                     <option v-for="concurso in concursos" v-bind:value="concurso.id">{{concurso.nome_concurso}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Tipo de Questão:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.tipo_questao">
                                     <option value="Dissertativa">Dissertativa</option>
                                     <option value="Alternativa" >Alternativa</option>
                                     <option value="V/F">V/F</option>
@@ -34,19 +32,17 @@
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Ano do Concurso:</p>
-                                <input type="date" class="w-3/4">
+                                <input type="date" class="w-3/4" v-model="formPesquisa.ano_concurso">
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Curso:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="">SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.curso">
                                     <option v-for="curso in cursos" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Grau de Dificuldade:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="">SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.grau_dificuldade">
                                     <option value="Facil">Facil</option>
                                     <option value="Moderada">Moderada</option>
                                     <option value="Dificil">Dificil</option>
@@ -54,8 +50,7 @@
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Disciplinas:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="">SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.disciplinas">
                                     <option v-for="disciplina in disciplinas" v-bind:value="disciplina.id">{{disciplina.nome_disciplina}}</option>
                                 </select>
                             </div>
@@ -74,13 +69,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="questao in questoes" :key="questao.id">
-                            <td class="text-center py-4 border border-black">{{questao.id}}</td>
-                            <td class="text-center border border-black">{{questao.nome_concurso}}</td>
-                            <td class="text-center border border-black">{{questao.pergunta}}</td>
-                            <td class="text-center border border-black">{{questao.grau_dificuldade}}</td>
-                            <td class="text-center border border-black">{{questao.tipo_questao}}</td>
-                            <td class="text-center border border-black">{{questao.nome_disciplina}}</td>
+                        <tr v-for="dadosQuestao in dadosQuestoes" :key="dadosQuestao.id">
+                            <td class="text-center py-4 border border-black">{{dadosQuestao.id}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.nome_concurso}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.pergunta}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.grau_dificuldade}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.nome_disciplina}}</td>
                             <td class="text-center border border-black">
                                 <p>Alterar</p>
                                 <p>Excluir</p>
@@ -97,11 +92,38 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['questoes', 'cursos', 'disciplinas', 'concursos'],
     components: {
         AppLayout,
     },
+    data: () => {
+        return {
+            dadosQuestoes: null,
+            formPesquisa: {
+                concurso: null,
+                tipo_questao: null,
+                ano_concurso: null,
+                curso: null,
+                grau_dificuldade: null,
+                disciplinas: null
+            }
+        }
+    },
+    methods: {
+        async handlePesquisa() {
+            return await axios.post(route('pesquisas.questoes'), this.formPesquisa)
+                .then((response) => {
+                    if(response.data.length > 0) {
+                        return this.dadosQuestoes = response.data
+                    }
+                })
+        }
+    },
+    mounted() {
+        this.dadosQuestoes = this.questoes
+    }
 })
 </script>
