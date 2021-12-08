@@ -42,13 +42,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="text-center py-4 border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
+                        <tr v-for="concurso in concursos" :key="concurso.id">
+                            <td class="text-center py-4 border border-black">{{concurso.id}}</td>
+                            <td class="text-center border border-black">{{concurso.nome_concurso}}</td>
+                            <td class="text-center border border-black">{{concurso.data_realizacao}}</td>
+                            <td class="text-center border border-black">{{concurso.tempo_duracao}}</td>
+                            <td class="text-center border border-black">{{concurso.observacoes}}</td>
+                            <td class="text-center border border-black">
+                                <p>Alterar</p>
+                                <p>Excluir</p>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -63,6 +66,7 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
+    props: ['concursos'],
     components: {
         AppLayout,
     },

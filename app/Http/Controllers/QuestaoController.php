@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Concurso;
+use App\Models\Curso;
+use App\Models\Disciplina;
 use App\Models\Questao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\In;
 use Inertia\Inertia;
 
 class QuestaoController extends Controller
@@ -15,17 +20,31 @@ class QuestaoController extends Controller
      */
     public function index()
     {
-        return Inertia::render('questoes/index');
+        $cursos = Curso::get();
+        $concursos = Concurso::get();
+        $disciplinas = Disciplina::get();
+        $questoes = Questao::join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
+            ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
+            ->get();
+        return Inertia::render('questoes/index', [
+            'cursos' => $cursos,
+            'concursos' => $concursos,
+            'disciplinas' => $disciplinas,
+            'questoes' => $questoes
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-
+        $cursos = Curso::get();
+        $concursos = Concurso::get();
+        $disciplinas = Disciplina::get();
+        return Inertia::render('questoes/form', ['cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas]);
     }
 
     /**
@@ -36,7 +55,8 @@ class QuestaoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Questao::create($request->all());
+        return Redirect::route('questoes.index');
     }
 
     /**

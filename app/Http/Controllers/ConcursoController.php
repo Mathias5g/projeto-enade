@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Concurso;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class ConcursoController extends Controller
@@ -14,28 +16,30 @@ class ConcursoController extends Controller
      */
     public function index()
     {
-        return Inertia::render('concursos/index');
+        $concursos = Concurso::all();
+        return Inertia::render('concursos/index', ['concursos' => $concursos]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        return Inertia::render('concursos/form');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        Concurso::create($request->all());
+        return Redirect::route('concursos.index');
     }
 
     /**

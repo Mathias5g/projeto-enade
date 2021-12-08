@@ -16,40 +16,47 @@
                             </button>
                         </div>
                         <div class="flex flex-wrap justify-between">
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Concurso:</p>
                                 <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                    <option value="">SELECIONE</option>
+                                    <option v-for="concurso in concursos" v-bind:value="concurso.id">{{concurso.nome_concurso}}</option>
                                 </select>
                             </div>
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Tipo de Questão:</p>
                                 <select name="" class="w-3/4">
                                     <option value="" selected disabled>SELECIONE</option>
+                                    <option value="Dissertativa">Dissertativa</option>
+                                    <option value="Alternativa" >Alternativa</option>
+                                    <option value="V/F">V/F</option>
                                 </select>
                             </div>
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Ano do Concurso:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
-                                </select>
+                                <input type="date" class="w-3/4">
                             </div>
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Curso:</p>
                                 <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                    <option value="">SELECIONE</option>
+                                    <option v-for="curso in cursos" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                                 </select>
                             </div>
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Grau de Dificuldade:</p>
                                 <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                    <option value="">SELECIONE</option>
+                                    <option value="Facil">Facil</option>
+                                    <option value="Moderada">Moderada</option>
+                                    <option value="Dificil">Dificil</option>
                                 </select>
                             </div>
-                            <div class="flex items-center justify-between w-3/6">
+                            <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Disciplinas:</p>
                                 <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                    <option value="">SELECIONE</option>
+                                    <option v-for="disciplina in disciplinas" v-bind:value="disciplina.id">{{disciplina.nome_disciplina}}</option>
                                 </select>
                             </div>
                         </div>
@@ -62,21 +69,22 @@
                             <th class="border border-black">Enunciado</th>
                             <th class="border border-black">Dificuldade</th>
                             <th class="border border-black">Tipo da Questão</th>
-                            <th class="border border-black">Curso</th>
                             <th class="border border-black">Disciplina</th>
                             <th class="border border-black">Ações</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="text-center py-4 border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
+                        <tr v-for="questao in questoes" :key="questao.id">
+                            <td class="text-center py-4 border border-black">{{questao.id}}</td>
+                            <td class="text-center border border-black">{{questao.nome_concurso}}</td>
+                            <td class="text-center border border-black">{{questao.pergunta}}</td>
+                            <td class="text-center border border-black">{{questao.grau_dificuldade}}</td>
+                            <td class="text-center border border-black">{{questao.tipo_questao}}</td>
+                            <td class="text-center border border-black">{{questao.nome_disciplina}}</td>
+                            <td class="text-center border border-black">
+                                <p>Alterar</p>
+                                <p>Excluir</p>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -91,6 +99,7 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
+    props: ['questoes', 'cursos', 'disciplinas', 'concursos'],
     components: {
         AppLayout,
     },

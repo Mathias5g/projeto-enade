@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Curso;
 use App\Models\Disciplina;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class DisciplinaController extends Controller
@@ -15,28 +17,34 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
-        return Inertia::render('disciplinas/index');
+        $disciplinas = Disciplina::join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')->get();
+        return Inertia::render('disciplinas/index', ['disciplinas' => $disciplinas]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function create()
     {
-        //
+        $cursos = Curso::all();
+        return Inertia::render('disciplinas/form', ['cursos' => $cursos]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-        //
+        Disciplina::create([
+            "nome_disciplina" => $request->nome_disciplina,
+            "curso_id" => $request->curso_id
+        ]);
+        return Redirect::route('disciplinas.index');
     }
 
     /**

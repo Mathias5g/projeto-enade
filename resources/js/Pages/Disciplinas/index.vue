@@ -40,11 +40,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td class="text-center py-4 border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
-                            <td class="text-center border border-black">1</td>
+                        <tr v-for="disciplina in disciplinas" :key="disciplina.id">
+                            <td class="text-center py-4 border border-black">{{disciplina.id}}</td>
+                            <td class="text-center border border-black">{{disciplina.nome_curso}}</td>
+                            <td class="text-center border border-black">{{disciplina.nome_disciplina}}</td>
+                            <td class="text-center border border-black">
+                                <p>Alterar</p>
+                                <p>Excluir</p>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -59,6 +62,7 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
+    props: ['disciplinas'],
     components: {
         AppLayout,
     },
