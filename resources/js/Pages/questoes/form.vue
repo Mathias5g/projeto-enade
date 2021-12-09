@@ -86,7 +86,8 @@
                                 </div>
                             </div>
                             <div class="self-end">
-                                <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                                <button v-if="typeof questao == 'undefined'" type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                                <button v-else type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Salvar</button>
                                 <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button>
                             </div>
                         </div>
@@ -102,7 +103,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
-    props: ['errors', 'cursos', 'concursos', 'disciplinas'],
+    props: ['errors', 'action', 'cursos', 'concursos', 'disciplinas', 'questao'],
     components: {
         AppLayout
     },
@@ -122,7 +123,12 @@ export default {
     },
     methods: {
         async formSubmit() {
-            await Inertia.post(route('questoes.store'), this.form)
+           this.action === route('questoes.store') ? await Inertia.post(this.action, this.form) : await Inertia.put(this.action, this.form)
+        }
+    },
+    mounted() {
+        if(this.questao) {
+            this.form = this.questao
         }
     }
 }

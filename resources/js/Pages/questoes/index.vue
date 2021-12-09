@@ -78,8 +78,8 @@
                             <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.nome_disciplina}}</td>
                             <td class="text-center border border-black">
-                                <p>Visualizar</p>
-                                <p>Alterar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Editar</p>
                                 <p>Excluir</p>
                             </td>
                         </tr>
@@ -138,7 +138,13 @@ export default defineComponent({
             this.formPesquisa.disciplinas = null
             this.erro = false
             return this.dadosQuestoes = this.questoes
-        }
+        },
+        handleEditar(questao) {
+            return Inertia.visit(route('questoes.show', questao))
+        },
+        handleDeletar(value) {
+            alert(value)
+        },
     },
     mounted() {
         console.log(this.questoes)

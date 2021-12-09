@@ -43,7 +43,8 @@ class QuestaoController extends Controller
         $cursos = Curso::get();
         $concursos = Concurso::get();
         $disciplinas = Disciplina::get();
-        return Inertia::render('questoes/form', ['cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas]);
+        $action = route('questoes.store');
+        return Inertia::render('questoes/form', ['action' => $action, 'cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas]);
     }
 
     /**
@@ -71,12 +72,16 @@ class QuestaoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Questao  $questao
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Questao  $questo
+     * @return \Inertia\Response
      */
-    public function show(Questao $questao)
+    public function show(Questao $questo)
     {
-        //
+        $cursos = Curso::get();
+        $concursos = Concurso::get();
+        $disciplinas = Disciplina::get();
+        $action = route('questoes.update', $questo);
+        return Inertia::render('questoes/form', ['action' => $action, 'cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas, 'questao' => $questo]);
     }
 
     /**
@@ -94,12 +99,23 @@ class QuestaoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Questao  $questao
-     * @return \Illuminate\Http\Response
+     * @param  \App\Models\Questao  $questo
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Questao $questao)
+    public function update(Request $request, Questao $questo)
     {
-        //
+        $request->validate([
+            'numero_questao' => 'required',
+            'tipo_questao' => 'required',
+            'grau_dificuldade' => 'required',
+            'pergunta' => 'required|min:2',
+            'resposta' => 'required|min:2',
+            'alternativa' => 'required',
+            'concurso_id' => 'required',
+            'disciplina_id' => 'required'
+        ]);
+        $questo->update($request->all());
+        return Redirect::route('questoes.index');
     }
 
     /**
