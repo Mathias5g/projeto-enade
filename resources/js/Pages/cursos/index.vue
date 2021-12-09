@@ -9,17 +9,24 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div v-show="erro">
+                        <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>
+                    </div>
                     <div id="filtro" class="flex flex-col m-4">
                         <div class="flex justify-between my-3">
                             <p class="text-red-600 italic underline font-semibold">Filtros:</p>
-                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Pesquisar
-                            </button>
+                            <div class="flex">
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2" @click="handlePesquisa">Pesquisar
+                                </button>
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handleResetarPesquisa">Resetar Filtros
+                                </button>
+                            </div>
                         </div>
                         <div class="flex flex-wrap justify-between">
                             <div class="flex items-center justify-between w-3/6">
                                 <p class="mx-2 font-semibold text-sm">Cursos:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.curso">
+                                    <option v-for="curso in cursos" :key="curso.id" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                                 </select>
                             </div>
                         </div>
@@ -33,10 +40,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="curso in cursos" :key="curso.id">
-                            <td class="text-center py-4 border border-black">{{curso.id}}</td>
-                            <td class="text-center border border-black">{{curso.nome_curso}}</td>
+                        <tr v-for="dadoCursos in dadosCursos" :key="dadoCursos.id">
+                            <td class="text-center py-4 border border-black">{{dadoCursos.id}}</td>
+                            <td class="text-center border border-black">{{dadoCursos.nome_curso}}</td>
                             <td class="text-center border border-black">
+                                <p>Visualizar</p>
                                 <p>Alterar</p>
                                 <p>Excluir</p>
                             </td>
@@ -57,6 +65,39 @@ export default defineComponent({
     props: ['cursos'],
     components: {
         AppLayout,
+    },
+    data: () => {
+        return {
+            dadosCursos: null,
+            desabilitado: true,
+            erro: false,
+            mensagemErro: '',
+            formPesquisa: {
+                curso: null,
+            }
+        }
+    },
+    methods: {
+        async handlePesquisa() {
+            return await axios.post(route('pesquisas.cursos'), this.formPesquisa)
+                .then((response) => {
+                    if(response.data.length > 0) {
+                        this.erro = false
+                        return this.dadosCursos = response.data
+                    } else {
+                        this.mensagemErro = 'Não foi possivel achar questões com o filtro informado';
+                        return this.erro = true
+                    }
+                })
+        },
+        handleResetarPesquisa() {
+            this.formPesquisa.curso = null
+            this.erro = false
+            return this.dadosCursos = this.cursos
+        }
+    },
+    mounted() {
+        this.dadosCursos = this.cursos
     },
 })
 </script>

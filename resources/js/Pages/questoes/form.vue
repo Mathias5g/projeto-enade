@@ -18,10 +18,6 @@
                             </select>
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
-                            <p class="mx-2 font-semibold text-sm">Ano da Questão:</p>
-                            <input type="date" class="w-3/4" v-model="form.ano_questao">
-                        </div>
-                        <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Número da Questão:</p>
                             <input type="text" class="w-3/4" v-model="form.numero_questao">
                         </div>
@@ -120,7 +116,6 @@ export default {
                 numero_questao: null,
                 tipo_questao: null,
                 grau_dificuldade: null,
-                ano_questao: null,
                 pergunta: null,
                 resposta: null,
                 alternativa: null,

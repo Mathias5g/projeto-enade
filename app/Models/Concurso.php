@@ -14,8 +14,8 @@ class Concurso extends Model
     protected $fillable = [
       'nome_concurso',
       'data_realizacao',
-      'horaInicio',
-      'horaTermino',
+      'hora_inicio',
+      'hora_termino',
       'tempo_duracao',
       'observacoes',
     ];

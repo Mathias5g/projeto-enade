@@ -32,6 +32,6 @@ class CreateTableConcursos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('table_concursos');
+        Schema::dropIfExists('concursos');
     }
 }

@@ -14,7 +14,7 @@ class AddCursoIdToDisciplinas extends Migration
     public function up()
     {
         Schema::table('disciplinas', function (Blueprint $table) {
-            $table->foreignId("curso_id")->references("id")->on("cursos");
+            $table->foreignId("curso_id")->references("id")->on("cursos")->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

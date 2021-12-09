@@ -17,8 +17,9 @@ class DisciplinaController extends Controller
      */
     public function index()
     {
+        $cursos = Curso::all();
         $disciplinas = Disciplina::join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')->get();
-        return Inertia::render('disciplinas/index', ['disciplinas' => $disciplinas]);
+        return Inertia::render('disciplinas/index', ['cursos' => $cursos, 'disciplinas' => $disciplinas]);
     }
 
     /**

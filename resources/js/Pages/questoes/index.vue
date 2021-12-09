@@ -10,10 +10,17 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div id="filtro" class="flex flex-col m-4">
+                        <div v-show="erro">
+                            <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>
+                        </div>
                         <div class="flex justify-between my-3">
                             <p class="text-red-600 italic underline font-semibold">Filtros:</p>
-                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handlePesquisa">Pesquisar
-                            </button>
+                            <div class="flex">
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2" @click="handlePesquisa">Pesquisar
+                                </button>
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handleResetarPesquisa">Resetar Filtros
+                                </button>
+                            </div>
                         </div>
                         <div class="flex flex-wrap justify-between">
                             <div class="flex items-center justify-between w-3/6 my-1">
@@ -32,13 +39,7 @@
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Ano do Concurso:</p>
-                                <input type="date" class="w-3/4" v-model="formPesquisa.ano_concurso">
-                            </div>
-                            <div class="flex items-center justify-between w-3/6 my-1">
-                                <p class="mx-2 font-semibold text-sm">Curso:</p>
-                                <select name="" class="w-3/4" v-model="formPesquisa.curso">
-                                    <option v-for="curso in cursos" v-bind:value="curso.id">{{curso.nome_curso}}</option>
-                                </select>
+                                <input type="number" min="1900" max="2099" step="1" class="w-3/4" v-model="formPesquisa.ano_concurso" placeholder="entre 1900 e 2099">
                             </div>
                             <div class="flex items-center justify-between w-3/6 my-1">
                                 <p class="mx-2 font-semibold text-sm">Grau de Dificuldade:</p>
@@ -77,6 +78,7 @@
                             <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.nome_disciplina}}</td>
                             <td class="text-center border border-black">
+                                <p>Visualizar</p>
                                 <p>Alterar</p>
                                 <p>Excluir</p>
                             </td>
@@ -102,11 +104,13 @@ export default defineComponent({
     data: () => {
         return {
             dadosQuestoes: null,
+            desabilitado: true,
+            erro: false,
+            mensagemErro: '',
             formPesquisa: {
                 concurso: null,
                 tipo_questao: null,
                 ano_concurso: null,
-                curso: null,
                 grau_dificuldade: null,
                 disciplinas: null
             }
@@ -117,13 +121,28 @@ export default defineComponent({
             return await axios.post(route('pesquisas.questoes'), this.formPesquisa)
                 .then((response) => {
                     if(response.data.length > 0) {
+                        this.erro = false
                         return this.dadosQuestoes = response.data
+                    } else {
+                        this.mensagemErro = 'Não foi possivel achar questões com o filtro informado';
+                        return this.erro = true
                     }
                 })
+        },
+        handleResetarPesquisa() {
+            this.formPesquisa.concurso = null
+            this.formPesquisa.tipo_questao = null
+            this.formPesquisa.ano_concurso = null
+            this.formPesquisa.curso = null
+            this.formPesquisa.grau_dificuldade = null
+            this.formPesquisa.disciplinas = null
+            this.erro = false
+            return this.dadosQuestoes = this.questoes
         }
     },
     mounted() {
+        console.log(this.questoes)
         this.dadosQuestoes = this.questoes
-    }
+    },
 })
 </script>

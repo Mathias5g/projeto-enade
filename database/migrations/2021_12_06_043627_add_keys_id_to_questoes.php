@@ -14,8 +14,8 @@ class AddKeysIdToQuestoes extends Migration
     public function up()
     {
         Schema::table('questoes', function (Blueprint $table) {
-            $table->foreignId("concurso_id")->references("id")->on("concursos");
-            $table->foreignId("disciplina_id")->references("id")->on("disciplinas");
+            $table->foreignId("concurso_id")->references("id")->on("concursos")->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreignId("disciplina_id")->references("id")->on("disciplinas")->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 

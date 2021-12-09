@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Concurso;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -38,15 +39,24 @@ class ConcursoController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'nome_concurso' => 'required',
             'data_realizacao' => 'required',
-            'horaInicio' => 'required',
-            'horaTermino' => 'required',
+            'hora_inicio' => 'required',
+            'hora_termino' => 'required',
             'tempo_duracao' => 'required',
             'observacoes' => 'required',
         ]);
-        Concurso::create($request->all());
+
+        Concurso::create([
+            'nome_concurso' => $request->nome_concurso,
+            'data_realizacao' => $request->data_realizacao,
+            'hora_inicio' => $request->hora_inicio,
+            'hora_termino' => $request->hora_termino,
+            'tempo_duracao' => $request->tempo_duracao,
+            'observacoes' => $request->observacoes,
+        ]);
         return Redirect::route('concursos.index');
     }
 

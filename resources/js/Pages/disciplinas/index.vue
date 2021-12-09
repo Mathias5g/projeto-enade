@@ -9,23 +9,30 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div v-show="erro">
+                        <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>
+                    </div>
                     <div id="filtro" class="flex flex-col m-4">
                         <div class="flex justify-between my-3">
                             <p class="text-red-600 italic underline font-semibold">Filtros:</p>
-                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Pesquisar
-                            </button>
+                            <div class="flex">
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2" @click="handlePesquisa">Pesquisar
+                                </button>
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handleResetarPesquisa">Resetar Filtros
+                                </button>
+                            </div>
                         </div>
                         <div class="flex flex-wrap justify-between">
                             <div class="flex items-center justify-between w-full my-1">
                                 <p class="mx-2 font-semibold text-sm">Curso:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.curso">
+                                    <option v-for="curso in cursos" :key="curso.id" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                                 </select>
                             </div>
                             <div class="flex items-center justify-between w-full my-1">
                                 <p class="mx-2 font-semibold text-sm">Disciplina:</p>
-                                <select name="" class="w-3/4">
-                                    <option value="" selected disabled>SELECIONE</option>
+                                <select name="" class="w-3/4" v-model="formPesquisa.disciplina">
+                                    <option v-for="disciplina in disciplinas" :key="disciplina.id" v-bind:value="disciplina.id">{{disciplina.nome_disciplina}}</option>
                                 </select>
                             </div>
                         </div>
@@ -40,11 +47,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="disciplina in disciplinas" :key="disciplina.id">
-                            <td class="text-center py-4 border border-black">{{disciplina.id}}</td>
-                            <td class="text-center border border-black">{{disciplina.nome_curso}}</td>
-                            <td class="text-center border border-black">{{disciplina.nome_disciplina}}</td>
+                        <tr v-for="dadoDisciplina in dadosDisciplina" :key="dadoDisciplina.id">
+                            <td class="text-center py-4 border border-black">{{dadoDisciplina.id}}</td>
+                            <td class="text-center border border-black">{{dadoDisciplina.nome_curso}}</td>
+                            <td class="text-center border border-black">{{dadoDisciplina.nome_disciplina}}</td>
                             <td class="text-center border border-black">
+                                <p>Visualizar</p>
                                 <p>Alterar</p>
                                 <p>Excluir</p>
                             </td>
@@ -62,9 +70,45 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
 export default defineComponent({
-    props: ['disciplinas'],
+    props: ['disciplinas', 'cursos'],
     components: {
         AppLayout,
+    },
+    data: () => {
+        return {
+            dadosDisciplina: null,
+            desabilitado: true,
+            erro: false,
+            mensagemErro: '',
+            formPesquisa: {
+                curso: null,
+                disciplina: null,
+            }
+        }
+    },
+    methods: {
+        async handlePesquisa() {
+            return await axios.post(route('pesquisas.disciplinas'), this.formPesquisa)
+                .then((response) => {
+                    if(response.data.length > 0) {
+                        this.erro = false
+                        console.log(response.data)
+                        return this.dadosDisciplina = response.data
+                    } else {
+                        this.mensagemErro = 'Não foi possivel achar questões com o filtro informado';
+                        return this.erro = true
+                    }
+                })
+        },
+        handleResetarPesquisa() {
+            this.formPesquisa.curso = null
+            this.formPesquisa.disciplina = null
+            this.erro = false
+            return this.dadosDisciplina = this.disciplinas
+        }
+    },
+    mounted() {
+        this.dadosDisciplina = this.disciplinas
     },
 })
 </script>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Concurso;
+use App\Models\Curso;
+use App\Models\Disciplina;
 use App\Models\Questao;
 use Illuminate\Http\Request;
 
@@ -18,32 +21,69 @@ class SearchController
             $questoes->where('questoes.tipo_questao', '=', $request->tipo_questao);
         }
 
+        if(!is_null($request->ano_concurso)) {
+            $questoes->whereYear('concursos.data_realizacao', '=', $request->ano_concurso);
+        }
+
         if(!is_null($request->grau_dificuldade)) {
             $questoes->where('questoes.grau_dificuldade', '=', $request->grau_dificuldade);
         }
 
         if(!is_null($request->disciplinas)) {
-            $questoes->where('questoes.disciplina_id', '=', $request->disciplina_id);
+            $questoes->where('questoes.disciplina_id', '=', $request->disciplinas);
         }
 
-        $json = $questoes->select('questoes.id', 'pergunta', 'grau_dificuldade', 'tipo_questao', 'concursos.nome_concurso', 'disciplinas.nome_disciplina')
-            ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
+        $json = $questoes
             ->join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
+            ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
             ->get();
-
 
         return response()->json($json);
     }
 
     public function concursos(Request $request) {
-        return response()->json(['ok']);
+        $concursos = Concurso::query();
+
+        if(!is_null($request->concursos)) {
+            $concursos->where('concursos.id', '=', $request->concursos);
+        }
+
+        if(!is_null($request->ano_concurso)) {
+            $concursos->whereYear('concursos.data_realizacao', '=', $request->ano_concurso);
+        }
+
+        $json = $concursos->get();
+
+        return response()->json($json);
     }
 
     public function disciplinas(Request $request) {
-        return response()->json(['ok']);
+        $disciplinas = Disciplina::query();
+
+        if(!is_null($request->curso)) {
+            $disciplinas->where('disciplinas.curso_id', '=', $request->curso);
+        }
+
+        if(!is_null($request->disciplina)) {
+            $disciplinas->where('disciplinas.id', '=', $request->disciplina);
+        }
+
+        $json = $disciplinas
+            ->join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')
+            ->get();
+
+        return response()->json($json);
     }
 
     public function cursos(Request $request) {
-        return response()->json(['ok']);
+        $cursos = Curso::query();
+
+        if(!is_null($request->curso)) {
+            $cursos->where('cursos.id', '=', $request->curso);
+        }
+
+        $json = $cursos->get();
+
+        return response()->json($json);
     }
 }

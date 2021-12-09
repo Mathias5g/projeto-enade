@@ -50,7 +50,7 @@ class QuestaoController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -58,7 +58,6 @@ class QuestaoController extends Controller
             'numero_questao' => 'required',
             'tipo_questao' => 'required',
             'grau_dificuldade' => 'required',
-            'ano_questao' => 'required',
             'pergunta' => 'required',
             'resposta' => 'required',
             'alternativa' => 'required',
