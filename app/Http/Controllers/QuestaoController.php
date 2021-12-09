@@ -22,9 +22,11 @@ class QuestaoController extends Controller
         $cursos = Curso::get();
         $concursos = Concurso::get();
         $disciplinas = Disciplina::get();
-        $questoes = Questao::join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
+        $questoes = Questao::select('questoes.id', 'questoes.pergunta', 'questoes.grau_dificuldade', 'questoes.tipo_questao', 'concursos.nome_concurso', 'disciplinas.nome_disciplina')
+            ->join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
             ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
             ->get();
+
         return Inertia::render('questoes/index', [
             'cursos' => $cursos,
             'concursos' => $concursos,

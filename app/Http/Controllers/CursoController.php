@@ -81,7 +81,7 @@ class CursoController extends Controller
     public function update(Request $request, Curso $curso)
     {
         $request->validate([
-            'nome_curso' => 'required|unique:cursos|min:2'
+            'nome_curso' => 'required|min:2|unique:cursos,nome_curso,' . $curso->id
         ]);
         $curso->update($request->all());
         return Redirect::route('cursos.index');

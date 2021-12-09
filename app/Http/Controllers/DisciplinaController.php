@@ -18,7 +18,7 @@ class DisciplinaController extends Controller
     public function index()
     {
         $cursos = Curso::all();
-        $disciplinas = Disciplina::join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')->get();
+        $disciplinas = Disciplina::select('disciplinas.id', 'disciplinas.nome_disciplina', 'cursos.nome_curso')->join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')->get();
         return Inertia::render('disciplinas/index', ['cursos' => $cursos, 'disciplinas' => $disciplinas]);
     }
 
@@ -84,7 +84,7 @@ class DisciplinaController extends Controller
     public function update(Request $request, Disciplina $disciplina)
     {
         $request->validate([
-            'nome_disciplina' => 'required|unique:disciplinas|min:2',
+            'nome_disciplina' => 'required|min:2|unique:disciplinas,nome_disciplina,' . $disciplina->id,
             'curso_id' => 'required'
         ]);
         $disciplina->update($request->all());

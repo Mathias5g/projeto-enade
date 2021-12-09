@@ -47,13 +47,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="dadoDisciplina in dadosDisciplina" :key="dadoDisciplina.id">
-                            <td class="text-center py-4 border border-black">{{dadoDisciplina.id}}</td>
-                            <td class="text-center border border-black">{{dadoDisciplina.nome_curso}}</td>
-                            <td class="text-center border border-black">{{dadoDisciplina.nome_disciplina}}</td>
+                        <tr v-for="ddDisciplina in dadosDisciplina" :key="ddDisciplina.id">
+                            <td class="text-center py-4 border border-black">{{ddDisciplina.id}}</td>
+                            <td class="text-center border border-black">{{ddDisciplina.nome_curso}}</td>
+                            <td class="text-center border border-black">{{ddDisciplina.nome_disciplina}}</td>
                             <td class="text-center border border-black">
-                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoDisciplina)">Visualizar</p>
-                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoDisciplina)">Editar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Editar</p>
                                 <p>Excluir</p>
                             </td>
                         </tr>
@@ -93,7 +93,6 @@ export default defineComponent({
                 .then((response) => {
                     if(response.data.length > 0) {
                         this.erro = false
-                        console.log(response.data)
                         return this.dadosDisciplina = response.data
                     } else {
                         this.mensagemErro = 'Não foi possivel achar questões com o filtro informado';
