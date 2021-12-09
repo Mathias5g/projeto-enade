@@ -58,8 +58,8 @@ class QuestaoController extends Controller
             'numero_questao' => 'required',
             'tipo_questao' => 'required',
             'grau_dificuldade' => 'required',
-            'pergunta' => 'required|min:3',
-            'resposta' => 'required|min:3',
+            'pergunta' => 'required|min:2',
+            'resposta' => 'required|min:2',
             'alternativa' => 'required',
             'concurso_id' => 'required',
             'disciplina_id' => 'required'

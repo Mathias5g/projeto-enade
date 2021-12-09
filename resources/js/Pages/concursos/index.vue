@@ -58,8 +58,8 @@
                             <td class="text-center border border-black">{{calcularTempoDuracao(dadoConcursos.tempo_duracao)}}</td>
                             <td class="text-center border border-black">{{dadoConcursos.observacoes}}</td>
                             <td class="text-center border border-black">
-                                <p>Visualizar</p>
-                                <p>Alterar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Editar</p>
                                 <p>Excluir</p>
                             </td>
                         </tr>
@@ -75,6 +75,7 @@
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import moment from 'moment'
+import {Inertia} from "@inertiajs/inertia";
 
 moment.locale("pt-br");
 export default defineComponent({
@@ -118,6 +119,12 @@ export default defineComponent({
             this.formPesquisa.ano_concurso = null
             this.erro = false
             return this.dadosConcursos = this.concursos
+        },
+        handleEditar(concurso) {
+            return Inertia.visit(route('concursos.show', concurso))
+        },
+        handleDeletar(value) {
+            alert(value)
         },
     },
     mounted() {

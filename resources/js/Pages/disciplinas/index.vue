@@ -52,8 +52,8 @@
                             <td class="text-center border border-black">{{dadoDisciplina.nome_curso}}</td>
                             <td class="text-center border border-black">{{dadoDisciplina.nome_disciplina}}</td>
                             <td class="text-center border border-black">
-                                <p>Visualizar</p>
-                                <p>Alterar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoDisciplina)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoDisciplina)">Editar</p>
                                 <p>Excluir</p>
                             </td>
                         </tr>
@@ -68,6 +68,7 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['disciplinas', 'cursos'],
@@ -105,7 +106,13 @@ export default defineComponent({
             this.formPesquisa.disciplina = null
             this.erro = false
             return this.dadosDisciplina = this.disciplinas
-        }
+        },
+        handleEditar(disciplina) {
+            return Inertia.visit(route('disciplinas.show', disciplina))
+        },
+        handleDeletar(value) {
+            alert(value)
+        },
     },
     mounted() {
         this.dadosDisciplina = this.disciplinas

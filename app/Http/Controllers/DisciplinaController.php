@@ -29,8 +29,9 @@ class DisciplinaController extends Controller
      */
     public function create()
     {
+        $action = route('disciplinas.store');
         $cursos = Curso::all();
-        return Inertia::render('disciplinas/form', ['cursos' => $cursos]);
+        return Inertia::render('disciplinas/form', ['action' => $action, 'cursos' => $cursos]);
     }
 
     /**
@@ -42,7 +43,7 @@ class DisciplinaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'nome_disciplina' => 'required|unique:disciplinas|min:3',
+           'nome_disciplina' => 'required|unique:disciplinas|min:2',
            'curso_id' => 'required'
         ]);
         Disciplina::create($request->all());
@@ -53,11 +54,13 @@ class DisciplinaController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Disciplina  $disciplina
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Disciplina $disciplina)
     {
-        //
+        $action = route('disciplinas.update', $disciplina);
+        $cursos = Curso::all();
+        return Inertia::render('disciplinas/form', ['disciplina' => $disciplina, 'action' => $action, 'cursos' => $cursos]);
     }
 
     /**
@@ -76,11 +79,16 @@ class DisciplinaController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Disciplina  $disciplina
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Disciplina $disciplina)
     {
-        //
+        $request->validate([
+            'nome_disciplina' => 'required|unique:disciplinas|min:2',
+            'curso_id' => 'required'
+        ]);
+        $disciplina->update($request->all());
+        return Redirect::route('disciplinas.index');
     }
 
     /**

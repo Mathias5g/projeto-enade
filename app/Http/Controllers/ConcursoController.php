@@ -28,7 +28,8 @@ class ConcursoController extends Controller
      */
     public function create()
     {
-        return Inertia::render('concursos/form');
+        $action = route('concursos.store');
+        return Inertia::render('concursos/form', ['action' => $action]);
     }
 
     /**
@@ -41,7 +42,7 @@ class ConcursoController extends Controller
     {
 
         $request->validate([
-            'nome_concurso' => 'required|unique:concursos|min:3',
+            'nome_concurso' => 'required|unique:concursos|min:2',
             'data_realizacao' => 'required',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',
@@ -49,26 +50,20 @@ class ConcursoController extends Controller
             'observacoes' => 'required|min:3',
         ]);
 
-        Concurso::create([
-            'nome_concurso' => $request->nome_concurso,
-            'data_realizacao' => $request->data_realizacao,
-            'hora_inicio' => $request->hora_inicio,
-            'hora_termino' => $request->hora_termino,
-            'tempo_duracao' => $request->tempo_duracao,
-            'observacoes' => $request->observacoes,
-        ]);
+        Concurso::create($request->all());
         return Redirect::route('concursos.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Concurso $concurso
+     * @return \Inertia\Response
      */
-    public function show($id)
+    public function show(Concurso $concurso)
     {
-        //
+        $action = route('concursos.update', $concurso);
+        return Inertia::render('concursos/form', ['concurso' => $concurso, 'action' => $action]);
     }
 
     /**
@@ -87,11 +82,20 @@ class ConcursoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Concurso $concurso)
     {
-        //
+        $request->validate([
+            'nome_concurso' => 'required|unique:concursos|min:2',
+            'data_realizacao' => 'required',
+            'hora_inicio' => 'required',
+            'hora_termino' => 'required',
+            'tempo_duracao' => 'required',
+            'observacoes' => 'required|min:3',
+        ]);
+        $concurso->update($request->all());
+        return Redirect::route('concursos.index');
     }
 
     /**
