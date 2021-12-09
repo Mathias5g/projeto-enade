@@ -46,8 +46,25 @@
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoCursos)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoCursos)">Editar</p>
-                                <p>Excluir</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="modal = !modal">Excluir</p>
                             </td>
+                            <confirmation-modal :show="modal" :closeable="true">
+                                <template #title>
+                                    <p class="text-red-600 font-bold text-3xl">AVISO!</p>
+                                </template>
+
+                                <template #content>
+                                    <p class="text-lg">Você tem certeza que deseja remover esse curso? Todas as informações relacionadas
+                                        serão deletadas permanentemente.</p>
+                                    <br />
+                                    <p class="italic text-red-600 font-semibold">Essa ação não poderá ser desfeita após a confirmação</p>
+                                </template>
+
+                                <template #footer>
+                                    <button type="button" class="bg-red-600 p-4 text-white font-semibold border rounded" @click="handleDeletar(dadoCursos.id)">EXCLUIR</button>
+                                    <button type="button" class="bg-blue-600 p-4 text-white font-semibold border rounded" @click="modal = !modal">CANCELAR</button>
+                                </template>
+                            </confirmation-modal>
                         </tr>
                         </tbody>
                     </table>
@@ -60,18 +77,21 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['cursos'],
     components: {
         AppLayout,
+        ConfirmationModal
     },
     data: () => {
         return {
             dadosCursos: null,
             desabilitado: true,
             erro: false,
+            modal: false,
             mensagemErro: '',
             formPesquisa: {
                 curso: null,
@@ -99,8 +119,8 @@ export default defineComponent({
         handleEditar(curso) {
           return Inertia.visit(route('cursos.show', curso))
         },
-        handleDeletar(value) {
-            alert(value)
+        handleDeletar(id) {
+            alert(id)
         },
     },
     mounted() {
