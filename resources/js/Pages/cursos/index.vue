@@ -44,8 +44,8 @@
                             <td class="text-center py-4 border border-black">{{dadoCursos.id}}</td>
                             <td class="text-center border border-black">{{dadoCursos.nome_curso}}</td>
                             <td class="text-center border border-black">
-                                <p>Visualizar</p>
-                                <p>Alterar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoCursos)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoCursos)">Editar</p>
                                 <p>Excluir</p>
                             </td>
                         </tr>
@@ -60,6 +60,7 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['cursos'],
@@ -94,7 +95,13 @@ export default defineComponent({
             this.formPesquisa.curso = null
             this.erro = false
             return this.dadosCursos = this.cursos
-        }
+        },
+        handleEditar(curso) {
+          return Inertia.visit(route('cursos.show', curso))
+        },
+        handleDeletar(value) {
+            alert(value)
+        },
     },
     mounted() {
         this.dadosCursos = this.cursos

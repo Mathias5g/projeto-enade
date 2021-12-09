@@ -12,7 +12,8 @@
                             <input v-bind:class="errors.nome_curso ? 'border-red-600' : ''" type="text" class="w-3/4" v-model="form.nome_curso">
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-if="typeof curso == 'undefined'" type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-else type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Salvar</button>
                             <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button>
                         </div>
                     </form>
@@ -27,7 +28,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
-    props: ['errors'],
+    props: ['errors', 'curso', 'action'],
     components: {
         AppLayout
     },
@@ -40,7 +41,13 @@ export default {
     },
     methods: {
         async formSubmit() {
-            await Inertia.post(route('cursos.store'), this.form)
+            this.action === route('cursos.store') ? await Inertia.post(this.action, this.form) : await Inertia.put(this.action, this.form)
+        }
+    },
+    mounted() {
+        console.log(this.action)
+        if(this.curso) {
+            this.form = this.curso
         }
     }
 }

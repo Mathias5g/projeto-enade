@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Curso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 use Inertia\Inertia;
 
 class CursoController extends Controller
@@ -28,7 +29,8 @@ class CursoController extends Controller
      */
     public function create()
     {
-        return Inertia::render('cursos/form');
+        $action = route('cursos.store');
+        return Inertia::render('cursos/form', ['action' => $action]);
     }
 
     /**
@@ -50,11 +52,12 @@ class CursoController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Curso  $curso
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function show(Curso $curso)
     {
-        //
+        $action = route('cursos.update', $curso);
+        return Inertia::render('cursos/form', ['curso' => $curso, 'action' => $action]);
     }
 
     /**
@@ -73,11 +76,12 @@ class CursoController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Curso  $curso
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Curso $curso)
     {
-        //
+        $curso->update($request->all());
+        return Redirect::route('cursos.index');
     }
 
     /**
