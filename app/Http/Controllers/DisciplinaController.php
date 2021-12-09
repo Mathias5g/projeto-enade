@@ -42,7 +42,7 @@ class DisciplinaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'nome_disciplina' => 'required',
+           'nome_disciplina' => 'required|unique:disciplinas|min:3',
            'curso_id' => 'required'
         ]);
         Disciplina::create($request->all());

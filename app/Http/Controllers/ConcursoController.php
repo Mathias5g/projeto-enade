@@ -41,12 +41,12 @@ class ConcursoController extends Controller
     {
 
         $request->validate([
-            'nome_concurso' => 'required',
+            'nome_concurso' => 'required|unique:concursos|min:3',
             'data_realizacao' => 'required',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',
             'tempo_duracao' => 'required',
-            'observacoes' => 'required',
+            'observacoes' => 'required|min:3',
         ]);
 
         Concurso::create([
