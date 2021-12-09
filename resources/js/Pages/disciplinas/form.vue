@@ -9,11 +9,11 @@
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Nome da Disciplina:</p>
-                            <input type="text" class="w-3/4" v-model="form.nome_disciplina">
+                            <input v-bind:class="errors.nome_disciplina ? 'border-red-600' : ''" type="text" class="w-3/4" v-model="form.nome_disciplina">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Curso:</p>
-                            <select class="w-3/4" v-model="form.curso_id">
+                            <select v-bind:class="errors.curso_id ? 'border-red-600' : ''" class="w-3/4" v-model="form.curso_id">
                                 <option value="" selected disabled>SELECIONE</option>
                                 <option v-for="curso in cursos" :key="curso.id" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                             </select>

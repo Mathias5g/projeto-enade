@@ -9,27 +9,27 @@
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Nome do Concurso:</p>
-                            <input type="text" class="w-3/4" v-model="form.nome_concurso">
+                            <input v-bind:class="errors.nome_concurso ? 'border-red-600' : ''" type="text" class="w-3/4" v-model="form.nome_concurso">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Data da Realização:</p>
-                            <input type="date" class="w-3/4" v-model="form.data_realizacao">
+                            <input v-bind:class="errors.data_realizacao ? 'border-red-600' : ''" type="date" class="w-3/4" v-model="form.data_realizacao">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora de Inicío:</p>
-                            <input type="time" class="w-3/4" v-model="form.hora_inicio">
+                            <input v-bind:class="errors.hora_inicio ? 'border-red-600' : ''" type="time" class="w-3/4" v-model="form.hora_inicio">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Hora do Término:</p>
-                            <input type="time" class="w-3/4" v-model="form.hora_termino">
+                            <input v-bind:class="errors.hora_termino ? 'border-red-600' : ''" type="time" class="w-3/4" v-model="form.hora_termino">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Duração da Prova:</p>
-                            <input type="number" class="w-3/4" placeholder="em minutos" v-model="form.tempo_duracao">
+                            <input v-bind:class="errors.tempo_duracao ? 'border-red-600' : ''" type="number" class="w-3/4" placeholder="em minutos" v-model="form.tempo_duracao">
                         </div>
                         <div class="flex flex-col w-full my-1">
                             <p>Observações:</p>
-                            <textarea class="w-full" v-model="form.observacoes"></textarea>
+                            <textarea v-bind:class="errors.observacoes ? 'border-red-600' : ''" class="w-full" v-model="form.observacoes"></textarea>
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>

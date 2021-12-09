@@ -9,22 +9,20 @@
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div v-show="true == false" class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">ID da Questão:</p>
-                            <input type="text" class="w-3/4">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Concurso:</p>
-                            <select class="w-3/4" v-model="form.concurso_id">
+                            <select v-bind:class="errors.concurso_id ? 'border-red-600' : ''" class="w-3/4" v-model="form.concurso_id">
                                 <option v-for="concurso in concursos" :key="concurso.key" v-bind:value="concurso.id">{{concurso.nome_concurso}}</option>
                             </select>
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Número da Questão:</p>
-                            <input type="text" class="w-3/4" v-model="form.numero_questao">
+                            <input v-bind:class="errors.numero_questao ? 'border-red-600' : ''" type="text" class="w-3/4" v-model="form.numero_questao">
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Tipo da Questão:</p>
-                            <select class="w-3/4" v-model="form.tipo_questao">
-                                <option value="" selected disabled>SELECIONE</option>
+                            <select v-bind:class="errors.tipo_questao ? 'border-red-600' : ''" class="w-3/4" v-model="form.tipo_questao">
                                 <option value="Dissertativa">Dissertativa</option>
                                 <option value="Alternativa">Alternativa</option>
                                 <option value="Alternativa">V/F</option>
@@ -32,15 +30,13 @@
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Disciplina da Questão:</p>
-                            <select class="w-3/4" v-model="form.disciplina_id">
-                                <option value="" selected disabled>SELECIONE</option>
+                            <select v-bind:class="errors.disciplina_id ? 'border-red-600' : ''" class="w-3/4" v-model="form.disciplina_id">
                                 <option v-for="disciplina in disciplinas" :key="disciplina.key" v-bind:value="disciplina.id">{{disciplina.nome_disciplina}}</option>
                             </select>
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Grau de Dificuldade:</p>
-                            <select class="w-3/4" v-model="form.grau_dificuldade">
-                                <option value="" selected disabled>SELECIONE</option>
+                            <select v-bind:class="errors.grau_dificuldade ? 'border-red-600' : ''" class="w-3/4" v-model="form.grau_dificuldade">
                                 <option value="Facil">Facil</option>
                                 <option value="Moderada">Moderada</option>
                                 <option value="Dificil">Dificil</option>
@@ -48,14 +44,14 @@
                         </div>
                         <div class="flex flex-col w-full my-1">
                             <p>Pergunta:</p>
-                            <textarea class="w-full" v-model="form.pergunta"></textarea>
+                            <textarea v-bind:class="errors.pergunta ? 'border-red-600' : ''" class="w-full" v-model="form.pergunta"></textarea>
                         </div>
                         <div class="flex flex-col w-full my-1">
-                            <p>Resposta:</p>
-                            <textarea class="w-full" v-model="form.resposta"></textarea>
+                            <p>Alternativas:</p>
+                            <textarea v-bind:class="errors.resposta ? 'border-red-600' : ''" class="w-full" v-model="form.resposta"></textarea>
                         </div>
                         <div class="flex justify-between">
-                            <div class="flex justify-between flex-wrap w-1/3">
+                            <div v-bind:class="errors.alternativa ? 'border border-red-600' : ''" class="flex justify-between flex-wrap w-1/3">
                                 <div class="flex items-center w-1/3 my-3">
                                     <p class="mr-2">A</p>
                                     <input type="radio" name="alternativa" value="A" v-model="form.alternativa">
@@ -119,8 +115,8 @@ export default {
                 pergunta: null,
                 resposta: null,
                 alternativa: null,
-                concurso_id: 'SELECIONE',
-                disciplina_id: 'SELECIONE'
+                concurso_id: null,
+                disciplina_id: null
             },
         }
     },

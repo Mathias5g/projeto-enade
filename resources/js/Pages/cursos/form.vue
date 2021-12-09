@@ -9,7 +9,7 @@
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Nome do Curso:</p>
-                            <input type="text" class="w-3/4" v-model="form.nome_curso">
+                            <input v-bind:class="errors.nome_curso ? 'border-red-600' : ''" type="text" class="w-3/4" v-model="form.nome_curso">
                         </div>
                         <div class="flex justify-end">
                             <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
