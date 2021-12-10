@@ -106,10 +106,10 @@ class QuestaoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Questao  $questao
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
-    public function destroy(Questao $questao)
+    public function destroy(Questao $questo)
     {
-        //
+        return $questo->delete();
     }
 }

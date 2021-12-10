@@ -136,7 +136,7 @@ export default defineComponent({
         },
         async handleConfirmaDeletar(disciplina) {
             this.modal = false
-            this.dadosCursos = this.cursos.filter(item => {
+            this.dadosDisciplina = this.disciplinas.filter(item => {
                 return item.id !== disciplina.id
             });
             await axios.delete(route('disciplinas.destroy', disciplina))

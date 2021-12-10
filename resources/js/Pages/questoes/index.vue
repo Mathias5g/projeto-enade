@@ -78,13 +78,30 @@
                             <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.nome_disciplina}}</td>
                             <td class="text-center border border-black">
-                                <p>Visualizar</p>
-                                <p>Alterar</p>
-                                <p>Excluir</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Visualizar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Editar</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleDeletar(dadosQuestao)">Excluir</p>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <confirmation-modal :show="modal" :closeable="true">
+                        <template #title>
+                            <p class="text-red-600 font-bold text-3xl">AVISO!</p>
+                        </template>
+
+                        <template #content>
+                            <p class="text-lg">Você tem certeza que deseja remover o curso {{questaoDeletar.pergunta}}? Todas as informações relacionadas
+                                serão deletadas permanentemente.</p>
+                            <br />
+                            <p class="italic text-red-600 font-semibold">Essa ação não poderá ser desfeita após a confirmação</p>
+                        </template>
+
+                        <template #footer>
+                            <button type="button" class="bg-red-600 p-4 text-white font-semibold border rounded" @click="handleConfirmaDeletar(questaoDeletar)">EXCLUIR</button>
+                            <button type="button" class="bg-blue-600 p-4 text-white font-semibold border rounded" @click="modal = !modal">CANCELAR</button>
+                        </template>
+                    </confirmation-modal>
                 </div>
             </div>
         </div>
@@ -94,17 +111,20 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['questoes', 'cursos', 'disciplinas', 'concursos'],
     components: {
         AppLayout,
+        ConfirmationModal
     },
     data: () => {
         return {
             dadosQuestoes: null,
-            desabilitado: true,
+            questaoDeletar: null,
+            modal: false,
             erro: false,
             mensagemErro: '',
             formPesquisa: {
@@ -138,7 +158,22 @@ export default defineComponent({
             this.formPesquisa.disciplinas = null
             this.erro = false
             return this.dadosQuestoes = this.questoes
-        }
+        },
+        handleEditar(questao) {
+            return Inertia.visit(route('questoes.show', questao))
+        },
+        handleDeletar(questao) {
+            this.modal = !this.modal
+            this.questaoDeletar = questao
+        },
+        async handleConfirmaDeletar(questo) {
+            this.modal = false
+            this.dadosQuestoes = this.questoes.filter(item => {
+                return item.id !== questo.id
+            });
+            await axios.delete(route('questoes.destroy', questo))
+            return Inertia.reload({ only: ['questoes'] })
+        },
     },
     mounted() {
         console.log(this.questoes)
