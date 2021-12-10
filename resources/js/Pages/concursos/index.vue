@@ -60,11 +60,28 @@
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Editar</p>
-                                <p>Excluir</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleDeletar(dadoConcursos)">Excluir</p>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <confirmation-modal :show="modal" :closeable="true">
+                        <template #title>
+                            <p class="text-red-600 font-bold text-3xl">AVISO!</p>
+                        </template>
+
+                        <template #content>
+                            <p class="text-lg">Você tem certeza que deseja remover o concurso {{concursoDeletar.nome_concurso}}? Todas as informações relacionadas
+                                serão deletadas permanentemente.</p>
+                            <br />
+                            <p class="italic text-red-600 font-semibold">Essa ação não poderá ser desfeita após a confirmação</p>
+                        </template>
+
+                        <template #footer>
+                            <button type="button" class="bg-red-600 p-4 text-white font-semibold border rounded" @click="handleConfirmaDeletar(concursoDeletar)">EXCLUIR</button>
+                            <button type="button" class="bg-blue-600 p-4 text-white font-semibold border rounded" @click="modal = !modal">CANCELAR</button>
+                        </template>
+                    </confirmation-modal>
                 </div>
             </div>
         </div>
@@ -76,17 +93,20 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import moment from 'moment'
 import {Inertia} from "@inertiajs/inertia";
+import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 
 moment.locale("pt-br");
 export default defineComponent({
     props: ['concursos'],
     components: {
         AppLayout,
+        ConfirmationModal
     },
     data: () => {
         return {
             dadosConcursos: null,
-            desabilitado: true,
+            concursoDeletar: null,
+            modal: false,
             erro: false,
             mensagemErro: '',
             formPesquisa: {
@@ -123,8 +143,17 @@ export default defineComponent({
         handleEditar(concurso) {
             return Inertia.visit(route('concursos.show', concurso))
         },
-        handleDeletar(value) {
-            alert(value)
+        handleDeletar(concurso) {
+            this.modal = !this.modal
+            this.cursoDeletar = concurso
+        },
+        async handleConfirmaDeletar(concurso) {
+            this.modal = false
+            this.dadosConcursos = this.concursos.filter(item => {
+                return item.id !== concurso.id
+            });
+            await axios.delete(route('concursos.destroy', concurso))
+            return Inertia.reload({ only: ['concurso'] })
         },
     },
     mounted() {
