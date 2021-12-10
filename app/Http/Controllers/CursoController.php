@@ -88,10 +88,10 @@ class CursoController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Curso  $curso
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
     public function destroy(Curso $curso)
     {
-        //
+        return Curso::where('cursos.id', '=', $curso->id)->delete();
     }
 }
