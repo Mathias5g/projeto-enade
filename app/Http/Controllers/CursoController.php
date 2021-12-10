@@ -92,6 +92,6 @@ class CursoController extends Controller
      */
     public function destroy(Curso $curso)
     {
-        return Curso::where('cursos.id', '=', $curso->id)->delete();
+        return $curso->delete();
     }
 }
