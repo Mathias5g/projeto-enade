@@ -7,8 +7,9 @@
                         <p v-for="error in errors" class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{error}}</p>
                     </div>
                     <form @submit.prevent="formSubmit" class="flex flex-col m-4">
-                        <div v-show="true == false" class="flex items-center justify-between w-full my-1">
-                            <p class="mx-2 font-semibold text-sm">ID da Questão:</p>
+                        <div v-show="typeof questao != 'undefined'" class="flex items-center justify-between w-full my-1">
+                            <p class="mx-2 font-semibold text-sm">ID no Sistema:</p>
+                            <input type="text" class="w-3/4 bg-gray-200 cursor-not-allowed" v-model="form.id" disabled>
                         </div>
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Concurso:</p>
@@ -127,9 +128,11 @@ export default {
         }
     },
     mounted() {
-        if(this.questao) {
+        if(typeof this.questao != 'undefined') {
             this.form = this.questao
         }
+
+        console.log(this.form)
     }
 }
 </script>
