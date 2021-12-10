@@ -34,6 +34,7 @@ class SearchController
         }
 
         $json = $questoes
+            ->select('questoes.id', 'questoes.pergunta', 'questoes.grau_dificuldade', 'questoes.tipo_questao', 'concursos.nome_concurso', 'disciplinas.nome_disciplina')
             ->join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
             ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
             ->get();
@@ -69,6 +70,7 @@ class SearchController
         }
 
         $json = $disciplinas
+            ->select('disciplinas.id', 'disciplinas.nome_disciplina', 'cursos.nome_curso')
             ->join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')
             ->get();
 

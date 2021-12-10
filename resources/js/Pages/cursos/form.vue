@@ -45,7 +45,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.action)
         if(this.curso) {
             this.form = this.curso
         }

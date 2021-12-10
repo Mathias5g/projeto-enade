@@ -14,12 +14,12 @@
                         <div class="flex items-center justify-between w-full my-1">
                             <p class="mx-2 font-semibold text-sm">Curso:</p>
                             <select v-bind:class="errors.curso_id ? 'border-red-600' : ''" class="w-3/4" v-model="form.curso_id">
-                                <option value="" selected disabled>SELECIONE</option>
                                 <option v-for="curso in cursos" :key="curso.id" v-bind:value="curso.id">{{curso.nome_curso}}</option>
                             </select>
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-if="typeof disciplina == 'undefined'" type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-else type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Salvar</button>
                             <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button>
                         </div>
                     </form>
@@ -34,7 +34,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
-    props: ['errors', 'cursos'],
+    props: ['errors', 'cursos', 'disciplina', 'action'],
     components: {
         AppLayout
     },
@@ -48,7 +48,12 @@ export default {
     },
     methods: {
         async formSubmit() {
-            await Inertia.post(route('disciplinas.store'), this.form)
+            this.action === route('disciplinas.store') ? await Inertia.post(this.action, this.form) : await Inertia.put(this.action, this.form)
+        },
+    },
+    mounted() {
+        if(this.disciplina) {
+            this.form = this.disciplina
         }
     }
 }

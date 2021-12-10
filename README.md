@@ -1,65 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+v<h1 align="center">👨‍💻 Projeto ENADE / Projeto Interdisciplinar III 👨‍💻</h1>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Contexto
 
-## About Laravel
+Bem-vindo(a). Este é o Projeto ENADE!
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O objetivo do projeto é facilitar a consulta de questões de concursos com foco principal em questões do ENADE
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+O desafio será implementar um sistema para inclusão e consulta de questões que deverá ter as seguintes funcionalidades:
+- [ ] Questões
+  - [x] Cadastro
+  - [x] Listagem
+  - [ ] Atualização
+  - [ ] Exclusão
+  - [x] Filtro
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [ ] Concursos
+    - [x] Cadastro
+    - [x] Listagem
+    - [x] Atualização
+    - [ ] Exclusão
+    - [x] Filtro
 
-## Learning Laravel
+- [ ] Disciplinas
+    - [x] Cadastro
+    - [x] Listagem
+    - [x] Atualização
+    - [ ] Exclusão
+    - [x] Filtro
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [ ] Cursos
+    - [x] Cadastro
+    - [x] Listagem
+    - [x] Atualização
+    - [ ] Exclusão
+    - [x] Filtro
+    
+- [ ] Relatorios com base em filtro
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+##Resultado
 
-## Laravel Sponsors
+- ### Requisitos
+Ter instalado as seguintes ferramentas
+    - [Composer](https://getcomposer.org/download/)
+    - [Node.js](https://nodejs.org/en/download/)
+    - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
+    - [Git](https://git-scm.com/downloads)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+##  Instalação
 
-### Premium Partners
+1. Clone o projeto
+```shell
+    git clone https://github.com/Mathias5g/projeto-enade
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+2. Baixa os pacotes composer
+```shell
+    composer install
+```
 
-## Contributing
+3. Baixe os pacotes npm
+```shell
+    yarn install 
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Como rodar
+1. Primeiro deverá alterar ``.env.example`` na raiz do projeto para ``.env``, alterar as linhas a seguir para o seu
+ambiente de banco de dados
+```dotenv
+DB_DATABASE=projeto_enade
+DB_USERNAME=root
+DB_PASSWORD=root
+```
 
-## Code of Conduct
+2. Rodar a migration para gerar as tebelas utilziando o seguinte comando
+```shell
+php artisan migrate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. Rodar o servidor localmente utilizando o seguinte comando
+```shell
+php artisan serve
+```
 
-## Security Vulnerabilities
+4. Acessar o servidor na url ``http://localhost:8000/register`` e criar uma conta 
+para utilizar o sistema
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+## Bibliotecas utilizadas
+Algumas bibliotecas foram utilizadas a fim de aprimorar a performance e usabilidade, todas elas estão listadas abaixo:
+```json
+{
+    "laravel/framework": "^8.65",
+    "laravel/framework": "^8.65"
+    "@inertiajs/inertia": "^0.10.0",
+    "@inertiajs/inertia-vue3": "^0.5.1",
+    "moment": "^2.29.1",
+    "tailwindcss": "^2.0.1",
+    "vue": "^3.0.5"
+}
+```
+Lista completa em ``composer.json`` e ``package.json``
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<p align="center">👨‍💻 Never Stop Learning 👨‍💻</p>

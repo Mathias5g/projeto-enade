@@ -113,7 +113,6 @@ export default defineComponent({
                 .then((response) => {
                     if(response.data.length > 0) {
                         this.erro = false
-                        console.log(response.data)
                         return this.dadosDisciplina = response.data
                     } else {
                         this.mensagemErro = 'Não foi possivel achar questões com o filtro informado';

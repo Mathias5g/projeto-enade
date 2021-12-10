@@ -32,7 +32,8 @@
                             <textarea v-bind:class="errors.observacoes ? 'border-red-600' : ''" class="w-full" v-model="form.observacoes"></textarea>
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-if="typeof concurso == 'undefined'" type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
+                            <button v-else type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Salvar</button>
                             <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button>
                         </div>
                     </form>
@@ -47,7 +48,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 
 export default {
-    props: ['errors'],
+    props: ['errors', 'concurso', 'action'],
     components: {
         AppLayout
     },
@@ -65,8 +66,13 @@ export default {
     },
     methods: {
         async formSubmit() {
-            await Inertia.post(route('concursos.store'), this.form)
+            this.action === route('concursos.store') ? await Inertia.post(this.action, this.form) : await Inertia.put(this.action, this.form)
         },
+    },
+    mounted() {
+        if(this.concurso) {
+            this.form = this.concurso
+        }
     }
 }
 </script>
