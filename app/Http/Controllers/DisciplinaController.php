@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Curso;
 use App\Models\Disciplina;
+use App\Models\DisciplinaCurso;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -43,10 +44,16 @@ class DisciplinaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-           'nome_disciplina' => 'required|unique:disciplinas|min:2',
-           'curso_id' => 'required'
+            'nome_disciplina' => 'required|unique:disciplinas|min:2',
+            'curso_id' => 'required'
         ]);
-        Disciplina::create($request->all());
+
+        foreach ($request->curso_id as $curso) {
+
+            dd([$request->nome_disciplina, $curso]);
+        }
+
+        //Disciplina::create($request->all());
         return Redirect::route('disciplinas.index');
     }
 

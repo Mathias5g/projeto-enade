@@ -19,4 +19,8 @@ class Curso extends Model
       'created_at' => 'datetime',
       'updated_at' => 'datetime',
     ];
+
+    public function disciplinas() {
+        return $this->belongsToMany(Disciplina::class);
+    }
 }
