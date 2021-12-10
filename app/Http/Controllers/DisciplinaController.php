@@ -95,10 +95,10 @@ class DisciplinaController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Disciplina  $disciplina
-     * @return \Illuminate\Http\Response
+     * @return bool
      */
     public function destroy(Disciplina $disciplina)
     {
-        //
+        return $disciplina->delete();
     }
 }

@@ -41,24 +41,41 @@
                         <thead class="bg-red-600 text-white">
                         <tr>
                             <th class="py-6 border border-black">ID</th>
-                            <th class="border border-black">Curso</th>
                             <th class="border border-black">Disciplina</th>
+                            <th class="border border-black">Curso</th>
                             <th class="border border-black">Ações</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="ddDisciplina in dadosDisciplina" :key="ddDisciplina.id">
                             <td class="text-center py-4 border border-black">{{ddDisciplina.id}}</td>
-                            <td class="text-center border border-black">{{ddDisciplina.nome_curso}}</td>
                             <td class="text-center border border-black">{{ddDisciplina.nome_disciplina}}</td>
+                            <td class="text-center border border-black">{{ddDisciplina.nome_curso}}</td>
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Editar</p>
-                                <p>Excluir</p>
+                                <p class="italic underline cursor-pointer text-blue-600" @click="handleDeletar(ddDisciplina)">Excluir</p>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <confirmation-modal :show="modal" :closeable="true">
+                        <template #title>
+                            <p class="text-red-600 font-bold text-3xl">AVISO!</p>
+                        </template>
+
+                        <template #content>
+                            <p class="text-lg">Você tem certeza que deseja remover essa disciplina {{disciplinaDeletar.nome_disciplina}}? Todas as informações relacionadas
+                                serão deletadas permanentemente.</p>
+                            <br />
+                            <p class="italic text-red-600 font-semibold">Essa ação não poderá ser desfeita após a confirmação</p>
+                        </template>
+
+                        <template #footer>
+                            <button type="button" class="bg-red-600 p-4 text-white font-semibold border rounded" @click="handleConfirmaDeletar(disciplinaDeletar)">EXCLUIR</button>
+                            <button type="button" class="bg-blue-600 p-4 text-white font-semibold border rounded" @click="modal = !modal">CANCELAR</button>
+                        </template>
+                    </confirmation-modal>
                 </div>
             </div>
         </div>
@@ -68,17 +85,20 @@
 <script>
 import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
+import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import {Inertia} from "@inertiajs/inertia";
 
 export default defineComponent({
     props: ['disciplinas', 'cursos'],
     components: {
         AppLayout,
+        ConfirmationModal
     },
     data: () => {
         return {
             dadosDisciplina: null,
-            desabilitado: true,
+            modal: false,
+            disciplinaDeletar: null,
             erro: false,
             mensagemErro: '',
             formPesquisa: {
@@ -109,8 +129,17 @@ export default defineComponent({
         handleEditar(disciplina) {
             return Inertia.visit(route('disciplinas.show', disciplina))
         },
-        handleDeletar(value) {
-            alert(value)
+        handleDeletar(disciplina) {
+            this.modal = !this.modal
+            this.disciplinaDeletar = disciplina
+        },
+        async handleConfirmaDeletar(disciplina) {
+            this.modal = false
+            this.dadosCursos = this.cursos.filter(item => {
+                return item.id !== disciplina.id
+            });
+            await axios.delete(route('disciplinas.destroy', disciplina))
+            return Inertia.reload({ only: ['disciplinas'] })
         },
     },
     mounted() {
