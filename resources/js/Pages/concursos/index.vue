@@ -145,7 +145,7 @@ export default defineComponent({
         },
         handleDeletar(concurso) {
             this.modal = !this.modal
-            this.cursoDeletar = concurso
+            this.concursoDeletar = concurso
         },
         async handleConfirmaDeletar(concurso) {
             this.modal = false
@@ -153,7 +153,7 @@ export default defineComponent({
                 return item.id !== concurso.id
             });
             await axios.delete(route('concursos.destroy', concurso))
-            return Inertia.reload({ only: ['concurso'] })
+            return Inertia.reload({ only: ['concursos'] })
         },
     },
     mounted() {

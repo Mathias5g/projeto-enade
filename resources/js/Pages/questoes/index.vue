@@ -91,7 +91,7 @@
                         </template>
 
                         <template #content>
-                            <p class="text-lg">Você tem certeza que deseja remover o curso {{questaoDeletar.pergunta}}? Todas as informações relacionadas
+                            <p class="text-lg">Você tem certeza que deseja remover a questão - {{questaoDeletar.pergunta}}? Todas as informações relacionadas
                                 serão deletadas permanentemente.</p>
                             <br />
                             <p class="italic text-red-600 font-semibold">Essa ação não poderá ser desfeita após a confirmação</p>
