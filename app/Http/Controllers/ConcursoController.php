@@ -87,7 +87,7 @@ class ConcursoController extends Controller
     public function update(Request $request, Concurso $concurso)
     {
         $request->validate([
-            'nome_concurso' => 'required|unique:concursos|min:2',
+            'nome_concurso' => 'required|min:2|unique:concursos,nome_concurso,' . $request->id,
             'data_realizacao' => 'required',
             'hora_inicio' => 'required',
             'hora_termino' => 'required',

@@ -15,7 +15,7 @@
                             <p class="mx-2 font-semibold text-sm">Curso:</p>
                             <Multiselect
                                 :classes="classes"
-                                v-model="form.curso_id"
+                                v-model="form.cursos"
                                 mode="tags"
                                 :searchable="true"
                                 :createTag="true"
@@ -45,7 +45,7 @@ import {Inertia} from "@inertiajs/inertia";
 import Multiselect from '@vueform/multiselect';
 
 export default {
-    props: ['errors', 'cursos', 'disciplina', 'action'],
+    props: ['errors', 'cursos', 'disciplina', 'curso_disciplina', 'action'],
     components: {
         AppLayout,
         Multiselect
@@ -54,7 +54,7 @@ export default {
         return {
             form: {
                 nome_disciplina: null,
-                curso_id: null
+                cursos: []
             },
             multiCursos: [],
             classes: {
@@ -115,7 +115,9 @@ export default {
     mounted() {
         if(typeof this.disciplina != 'undefined') {
             this.form = this.disciplina
+            this.form.cursos = this.curso_disciplina.map(item => item.id)
         }
+
         this.cursos.map(item => {
             this.multiCursos.push({
                 value: item.id,

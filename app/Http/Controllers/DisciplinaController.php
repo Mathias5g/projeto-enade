@@ -19,7 +19,7 @@ class DisciplinaController extends Controller
     public function index()
     {
         $cursos = Curso::all();
-        $disciplinas = Disciplina::select('disciplinas.id', 'disciplinas.nome_disciplina', 'cursos.nome_curso')->join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')->get();
+        $disciplinas = Disciplina::with(["cursos"])->get();
         return Inertia::render('disciplinas/index', ['cursos' => $cursos, 'disciplinas' => $disciplinas]);
     }
 
@@ -45,15 +45,15 @@ class DisciplinaController extends Controller
     {
         $request->validate([
             'nome_disciplina' => 'required|unique:disciplinas|min:2',
-            'curso_id' => 'required'
+            'cursos' => 'required'
         ]);
 
-        foreach ($request->curso_id as $curso) {
+        $disciplina = Disciplina::create($request->all());
 
-            dd([$request->nome_disciplina, $curso]);
+        if($request->has("cursos")) {
+            $disciplina->cursos()->sync($request->cursos);
         }
 
-        //Disciplina::create($request->all());
         return Redirect::route('disciplinas.index');
     }
 
@@ -67,7 +67,7 @@ class DisciplinaController extends Controller
     {
         $action = route('disciplinas.update', $disciplina);
         $cursos = Curso::all();
-        return Inertia::render('disciplinas/form', ['disciplina' => $disciplina, 'action' => $action, 'cursos' => $cursos]);
+        return Inertia::render('disciplinas/form', ['disciplina' => $disciplina,'curso_disciplina' => $disciplina->cursos()->get(), 'action' => $action, 'cursos' => $cursos]);
     }
 
     /**
@@ -92,9 +92,10 @@ class DisciplinaController extends Controller
     {
         $request->validate([
             'nome_disciplina' => 'required|min:2|unique:disciplinas,nome_disciplina,' . $disciplina->id,
-            'curso_id' => 'required'
+            'cursos' => 'required'
         ]);
         $disciplina->update($request->all());
+        $disciplina->cursos()->sync($request->cursos);
         return Redirect::route('disciplinas.index');
     }
 

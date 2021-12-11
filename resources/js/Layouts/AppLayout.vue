@@ -55,7 +55,7 @@
                 </div>
             </nav>
             <!-- Page Content -->
-            <main class="col-span-3 border border-black">
+            <main class="col-span-3 border border-black h-screen">
                 <slot></slot>
             </main>
         </div>

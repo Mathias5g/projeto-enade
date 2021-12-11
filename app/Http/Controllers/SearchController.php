@@ -62,18 +62,14 @@ class SearchController
         $disciplinas = Disciplina::query();
 
         if(!is_null($request->curso)) {
-            $disciplinas->where('disciplinas.curso_id', '=', $request->curso);
+            $disciplinas->with('cursos')->whereRelation('cursos', 'curso_id', $request->curso);
         }
 
         if(!is_null($request->disciplina)) {
-            $disciplinas->where('disciplinas.id', '=', $request->disciplina);
+            $disciplinas->with('cursos')->where('disciplinas.id', '=', $request->disciplina);
         }
 
-        $json = $disciplinas
-            ->select('disciplinas.id', 'disciplinas.nome_disciplina', 'cursos.nome_curso')
-            ->join('cursos', 'cursos.id', '=', 'disciplinas.curso_id')
-            ->get();
-
+        $json = $disciplinas->get();
         return response()->json($json);
     }
 

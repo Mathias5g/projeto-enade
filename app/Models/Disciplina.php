@@ -13,7 +13,6 @@ class Disciplina extends Model
 
     protected $fillable = [
       'nome_disciplina',
-      'curso_id',
     ];
 
     protected $casts = [
@@ -22,7 +21,7 @@ class Disciplina extends Model
     ];
 
     public function cursos() {
-        return $this->belongsToMany(Curso::class);
+        return $this->belongsToMany(Curso::class)->withTimestamps();
     }
 
     /*

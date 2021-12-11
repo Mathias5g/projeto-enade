@@ -46,7 +46,9 @@
 <script>
 import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
+import moment from 'moment'
 
+moment.locale("pt-br");
 export default {
     props: ['errors', 'concurso', 'action'],
     components: {
@@ -68,10 +70,14 @@ export default {
         async formSubmit() {
             this.action === route('concursos.store') ? await Inertia.post(this.action, this.form) : await Inertia.put(this.action, this.form)
         },
+        formatarData(value) {
+            return moment(value).format('YYYY-MM-DD')
+        }
     },
     mounted() {
-        if(this.concurso) {
+        if(typeof this.concurso != 'undefined') {
             this.form = this.concurso
+            this.form.data_realizacao = this.formatarData(this.form.data_realizacao)
         }
     }
 }

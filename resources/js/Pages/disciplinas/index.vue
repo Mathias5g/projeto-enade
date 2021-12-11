@@ -6,9 +6,9 @@
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="h-full">
+            <div class="max-w-full h-full">
+                <div class="bg-white overflow-y-auto h-full p-4 min-h-4/5 shadow-xl sm:rounded-lg">
                     <div v-show="erro">
                         <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>
                     </div>
@@ -50,7 +50,9 @@
                         <tr v-for="ddDisciplina in dadosDisciplina" :key="ddDisciplina.id">
                             <td class="text-center py-4 border border-black">{{ddDisciplina.id}}</td>
                             <td class="text-center border border-black">{{ddDisciplina.nome_disciplina}}</td>
-                            <td class="text-center border border-black">{{ddDisciplina.nome_curso}}</td>
+                            <td class="text-center border border-black">
+                                <p v-for="dis in ddDisciplina.cursos">{{dis.nome_curso}}</p>
+                            </td>
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(ddDisciplina)">Editar</p>
@@ -87,6 +89,7 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import {Inertia} from "@inertiajs/inertia";
+import {concat} from "lodash/array";
 
 export default defineComponent({
     props: ['disciplinas', 'cursos'],
@@ -127,7 +130,7 @@ export default defineComponent({
             return this.dadosDisciplina = this.disciplinas
         },
         handleEditar(disciplina) {
-            return Inertia.visit(route('disciplinas.show', disciplina))
+            return Inertia.visit(route('disciplinas.show', disciplina.id))
         },
         handleDeletar(disciplina) {
             this.modal = !this.modal
