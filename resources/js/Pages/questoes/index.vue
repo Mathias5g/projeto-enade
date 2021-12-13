@@ -8,7 +8,7 @@
 
         <div class="py-12 h-full">
             <div class="max-w-7xl h-full mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white h-full overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white h-full overflow-auto shadow-xl sm:rounded-lg p-4">
                     <div id="filtro" class="flex flex-col m-4">
                         <div v-show="erro">
                             <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>

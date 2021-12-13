@@ -2,11 +2,11 @@
     <app-layout title="Questão">
         <div class="py-12 h-full">
             <div class="max-w-7xl h-full mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white h-full overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white h-full overflow-auto shadow-xl sm:rounded-lg">
                     <div v-show="errors" id="erros">
                         <p v-for="error in errors" class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{error}}</p>
                     </div>
-                    <form @submit.prevent="formSubmit" class="flex flex-col m-4 p-8 h-full justify-between">
+                    <form @submit.prevent="formSubmit" class="flex flex-col p-4 h-full justify-between">
                         <div>
                             <div v-show="typeof questao != 'undefined'" class="flex items-center justify-between w-full my-1">
                                 <p class="mx-2 font-semibold text-sm">ID no Sistema:</p>
@@ -102,7 +102,7 @@
                         <div class="flex justify-end">
                             <button v-if="typeof questao == 'undefined'" type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Incluir</button>
                             <button v-else type="submit" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2">Salvar</button>
-                            <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button>
+                            <Link href="/questoes"><button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold">Cancelar</button></Link>
                         </div>
                     </form>
                 </div>
@@ -115,12 +115,14 @@
 import AppLayout from '@/Layouts/AppLayout';
 import {Inertia} from "@inertiajs/inertia";
 import Multiselect from '@vueform/multiselect';
+import { Link } from '@inertiajs/inertia-vue3'
 
 export default {
     props: ['errors', 'action', 'cursos', 'concursos', 'disciplinas', 'questao', 'disciplina_questao'],
     components: {
         AppLayout,
-        Multiselect
+        Multiselect,
+        Link
     },
     data: () => {
         return {
