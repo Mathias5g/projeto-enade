@@ -24,6 +24,10 @@ class Disciplina extends Model
         return $this->belongsToMany(Curso::class)->withTimestamps();
     }
 
+    public function questoes() {
+        return $this->belongsToMany(Questao::class);
+    }
+
     /*
       * //belongsTo (s)
       * Chave estrangeira

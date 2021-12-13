@@ -14,30 +14,28 @@ class SearchController
         $questoes = Questao::query();
 
         if(!is_null($request->concurso)) {
-            $questoes->where('questoes.concurso_id', '=', $request->concurso);
+            $questoes->with(['concurso', 'disciplinas'])->whereRelation('concurso', 'concurso_id', $request->concurso);
         }
 
         if(!is_null($request->tipo_questao)) {
-            $questoes->where('questoes.tipo_questao', '=', $request->tipo_questao);
+            $questoes->with(['concurso', 'disciplinas'])->where('questoes.tipo_questao', '=', $request->tipo_questao);
         }
 
         if(!is_null($request->ano_concurso)) {
-            $questoes->whereYear('concursos.data_realizacao', '=', $request->ano_concurso);
+            $questoes->with(['concurso', 'disciplinas'])->whereHas('concurso', function ($q) use ($request) {
+                return $q->whereYear('data_realizacao', $request->ano_concurso);
+            });
         }
 
         if(!is_null($request->grau_dificuldade)) {
-            $questoes->where('questoes.grau_dificuldade', '=', $request->grau_dificuldade);
+            $questoes->with(['concurso', 'disciplinas'])->where('questoes.grau_dificuldade', '=', $request->grau_dificuldade);
         }
 
         if(!is_null($request->disciplinas)) {
-            $questoes->where('questoes.disciplina_id', '=', $request->disciplinas);
+            $questoes->with(['concurso', 'disciplinas'])->whereRelation('disciplinas', 'disciplina_id', $request->disciplinas);
         }
 
-        $json = $questoes
-            ->select('questoes.id', 'questoes.pergunta', 'questoes.grau_dificuldade', 'questoes.tipo_questao', 'concursos.nome_concurso', 'disciplinas.nome_disciplina')
-            ->join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
-            ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
-            ->get();
+        $json = $questoes->get();
 
         return response()->json($json);
     }

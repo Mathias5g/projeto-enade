@@ -26,4 +26,12 @@ class Questao extends Model
       'created_at' => 'datetime',
       'updated_at' => 'datetime',
     ];
+
+    public function concurso() {
+        return $this->belongsTo(Concurso::class);
+    }
+
+    public function disciplinas() {
+        return $this->belongsToMany(Disciplina::class);
+    }
 }

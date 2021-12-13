@@ -67,7 +67,7 @@ class DisciplinaController extends Controller
     {
         $action = route('disciplinas.update', $disciplina);
         $cursos = Curso::all();
-        return Inertia::render('disciplinas/form', ['disciplina' => $disciplina,'curso_disciplina' => $disciplina->cursos()->get(), 'action' => $action, 'cursos' => $cursos]);
+        return Inertia::render('disciplinas/form', ['disciplina' => $disciplina, 'curso_disciplina' => $disciplina->cursos()->get(), 'action' => $action, 'cursos' => $cursos]);
     }
 
     /**

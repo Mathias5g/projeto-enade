@@ -72,11 +72,13 @@
                         <tbody>
                         <tr v-for="dadosQuestao in dadosQuestoes" :key="dadosQuestao.id">
                             <td class="text-center py-4 border border-black">{{dadosQuestao.id}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.nome_concurso}}</td>
+                            <td class="text-center border border-black">{{dadosQuestao.concurso.nome_concurso}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.pergunta}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.grau_dificuldade}}</td>
                             <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.nome_disciplina}}</td>
+                            <td class="text-center border border-black">
+                                <p v-for="disciplina in dadosQuestao.disciplinas">{{disciplina.nome_disciplina}}</p>
+                            </td>
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Editar</p>
@@ -176,7 +178,6 @@ export default defineComponent({
         },
     },
     mounted() {
-        console.log(this.questoes)
         this.dadosQuestoes = this.questoes
     },
 })

@@ -22,10 +22,7 @@ class QuestaoController extends Controller
         $cursos = Curso::get();
         $concursos = Concurso::get();
         $disciplinas = Disciplina::get();
-        $questoes = Questao::select('questoes.id', 'questoes.pergunta', 'questoes.grau_dificuldade', 'questoes.tipo_questao', 'concursos.nome_concurso', 'disciplinas.nome_disciplina')
-            ->join('concursos', 'concursos.id', '=', 'questoes.concurso_id')
-            ->join('disciplinas', 'disciplinas.id', '=', 'questoes.disciplina_id')
-            ->get();
+        $questoes = Questao::with(['concurso', 'disciplinas'])->get();
 
         return Inertia::render('questoes/index', [
             'cursos' => $cursos,
@@ -65,9 +62,15 @@ class QuestaoController extends Controller
             'resposta' => 'required|min:2',
             'alternativa' => 'required',
             'concurso_id' => 'required',
-            'disciplina_id' => 'required'
+            'disciplinas' => 'required'
         ]);
-        Questao::create($request->all());
+
+        $questao = Questao::create($request->all());
+
+        if($request->has('disciplinas')) {
+            $questao->disciplinas()->sync($request->disciplinas);
+        }
+
         return Redirect::route('questoes.index');
     }
 
@@ -83,7 +86,7 @@ class QuestaoController extends Controller
         $concursos = Concurso::get();
         $disciplinas = Disciplina::get();
         $action = route('questoes.update', $questo);
-        return Inertia::render('questoes/form', ['action' => $action, 'cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas, 'questao' => $questo]);
+        return Inertia::render('questoes/form', ['action' => $action, 'cursos' => $cursos, 'concursos' => $concursos, 'disciplinas' => $disciplinas, 'questao' => $questo, 'disciplina_questao' => $questo->disciplinas()->get()]);
     }
 
     /**
@@ -114,9 +117,10 @@ class QuestaoController extends Controller
             'resposta' => 'required|min:2',
             'alternativa' => 'required',
             'concurso_id' => 'required',
-            'disciplina_id' => 'required'
+            'disciplinas' => 'required'
         ]);
         $questo->update($request->all());
+        $questo->disciplinas()->sync($request->disciplinas);
         return Redirect::route('questoes.index');
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableDisciplinasToCursos extends Migration
+class CreateConcursosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateTableDisciplinasToCursos extends Migration
      */
     public function up()
     {
-        Schema::create('curso_disciplina', function (Blueprint $table) {
+        Schema::create('concursos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('disciplina_id')->references('id')->on('disciplinas')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->foreignId('curso_id')->references('id')->on('cursos')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->string("nome_concurso");
+            $table->timestamp("data_realizacao");
+            $table->time("hora_inicio");
+            $table->time("hora_termino");
+            $table->integer("tempo_duracao");
+            $table->string("observacoes", 300);
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateTableDisciplinasToCursos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('disciplinas_cursos');
+        Schema::dropIfExists('concursos');
     }
 }
