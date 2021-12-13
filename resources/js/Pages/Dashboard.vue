@@ -6,10 +6,19 @@
             </h2>
         </template>
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <welcome />
+        <div class="py-12 h-full">
+            <div class="max-w-7xl h-full mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white h-full overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="flex flex-col justify-center items-center">
+                        <h1 class="font-semibold text-3xl  max-width-1/4">Bem-vindo(a) ao sistema de consulta de questões do ENADE</h1>
+                        <h4 class="font-semibold text-2xl text-gray-600">Por aqui você poderá:</h4>
+                        <ul>
+                            <li class="text-blue-600 italic underline text-center text-xl"><Link href="/cursos">Consultar cursos cadastrados no sistema</Link></li>
+                            <li class="text-blue-600 italic underline text-center text-xl"><Link href="/disciplinas">Consultar disciplinas cadastradas no sistema</Link></li>
+                            <li class="text-blue-600 italic underline text-center text-xl"><Link href="/concursos">Consultar concursos cadastrados no sistema</Link></li>
+                            <li class="text-blue-600 italic underline text-center text-xl"><Link href="/questoes">Consultar questões cadastrados no sistema</Link></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -19,12 +28,12 @@
 <script>
     import { defineComponent } from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Welcome.vue'
+    import { Link } from '@inertiajs/inertia-vue3'
 
     export default defineComponent({
         components: {
             AppLayout,
-            Welcome,
+            Link
         },
     })
 </script>

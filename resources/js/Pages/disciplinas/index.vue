@@ -6,9 +6,9 @@
             </h2>
         </template>
 
-        <div class="h-full">
-            <div class="max-w-full h-full">
-                <div class="bg-white overflow-y-auto h-full p-4 min-h-4/5 shadow-xl sm:rounded-lg">
+        <div class="py-12 h-full">
+            <div class="max-w-7xl h-full mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white h-full overflow-hidden shadow-xl sm:rounded-lg">
                     <div v-show="erro">
                         <p class="italic font-semibold text-white underline bg-red-600 p-2 m-4">{{mensagemErro}}</p>
                     </div>
