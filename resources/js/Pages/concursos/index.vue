@@ -56,7 +56,7 @@
                             <td class="text-center border border-black">{{dadoConcursos.hora_inicio}}</td>
                             <td class="text-center border border-black">{{dadoConcursos.hora_termino}}</td>
                             <td class="text-center border border-black">{{calcularTempoDuracao(dadoConcursos.tempo_duracao)}}</td>
-                            <td class="text-center border border-black">{{dadoConcursos.observacoes}}</td>
+                            <td class="w-1/5 text-center border border-black"><p class="max-w-lg truncate hover:text-clip">{{dadoConcursos.observacoes}}</p></td>
                             <td class="text-center border border-black">
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Visualizar</p>
                                 <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadoConcursos)">Editar</p>

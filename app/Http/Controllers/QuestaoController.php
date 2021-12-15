@@ -58,11 +58,10 @@ class QuestaoController extends Controller
             'numero_questao' => 'required',
             'tipo_questao' => 'required',
             'grau_dificuldade' => 'required',
-            'pergunta' => 'required|min:2',
-            'resposta' => 'required|min:2',
-            'alternativa' => 'required',
+            'pergunta' => 'required|min:2|max:5000',
+            'resposta' => 'required|min:2|max:5000',
+            'disciplinas' => 'required',
             'concurso_id' => 'required',
-            'disciplinas' => 'required'
         ]);
 
         $questao = Questao::create($request->all());
@@ -113,11 +112,10 @@ class QuestaoController extends Controller
             'numero_questao' => 'required',
             'tipo_questao' => 'required',
             'grau_dificuldade' => 'required',
-            'pergunta' => 'required|min:2',
-            'resposta' => 'required|min:2',
-            'alternativa' => 'required',
+            'pergunta' => 'required|min:2|max:5000',
+            'resposta' => 'required|min:2|max:5000',
+            'disciplinas' => 'required',
             'concurso_id' => 'required',
-            'disciplinas' => 'required'
         ]);
         $questo->update($request->all());
         $questo->disciplinas()->sync($request->disciplinas);

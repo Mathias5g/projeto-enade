@@ -42,7 +42,7 @@
                                     :max="5"
                                     :closeOnSelect="true"
                                 />
-                                <!--select v-bind:class="errors.disciplina_id ? 'border-red-600' : ''" class="w-3/4" v-model="form.disciplina_id">
+                                <!--select v-bind:class="errors.disciplinas ? 'border-red-600' : ''" class="w-3/4" v-model="form.disciplina_id">
                                     <option v-for="disciplina in disciplinas" :key="disciplina.key" v-bind:value="disciplina.id">{{disciplina.nome_disciplina}}</option>
                                 </select-->
                             </div>
@@ -62,7 +62,7 @@
                                 <p>Alternativas:</p>
                                 <textarea v-bind:class="errors.resposta ? 'border-red-600' : ''" class="w-full" v-model="form.resposta"></textarea>
                             </div>
-                            <div class="flex justify-between">
+                            <div v-show="form.tipo_questao !== 'Dissertativa' && form.tipo_questao !== ''" class="flex justify-between">
                                 <div v-bind:class="errors.alternativa ? 'border border-red-600' : ''" class="flex justify-between flex-wrap w-1/3">
                                     <div class="flex items-center w-1/3 my-3">
                                         <p class="mr-2">A</p>
@@ -128,7 +128,7 @@ export default {
         return {
             form: {
                 numero_questao: null,
-                tipo_questao: null,
+                tipo_questao: '',
                 grau_dificuldade: null,
                 pergunta: null,
                 resposta: null,

@@ -7,32 +7,32 @@ Bem-vindo(a). Este é o Projeto ENADE!
 O objetivo do projeto é facilitar a consulta de questões de concursos com foco principal em questões do ENADE
 
 O desafio será implementar um sistema para inclusão e consulta de questões que deverá ter as seguintes funcionalidades:
-- [ ] Questões
+- [x] Questões
   - [x] Cadastro
   - [x] Listagem
-  - [ ] Atualização
-  - [ ] Exclusão
+  - [x] Atualização
+  - [x] Exclusão
   - [x] Filtro
 
-- [ ] Concursos
+- [x] Concursos
     - [x] Cadastro
     - [x] Listagem
     - [x] Atualização
-    - [ ] Exclusão
+    - [x] Exclusão
     - [x] Filtro
 
-- [ ] Disciplinas
+- [x] Disciplinas
     - [x] Cadastro
     - [x] Listagem
     - [x] Atualização
-    - [ ] Exclusão
+    - [x] Exclusão
     - [x] Filtro
 
-- [ ] Cursos
+- [x] Cursos
     - [x] Cadastro
     - [x] Listagem
     - [x] Atualização
-    - [ ] Exclusão
+    - [x] Exclusão
     - [x] Filtro
     
 - [ ] Relatorios com base em filtro
@@ -91,7 +91,6 @@ Algumas bibliotecas foram utilizadas a fim de aprimorar a performance e usabilid
 ```json
 {
     "laravel/framework": "^8.65",
-    "laravel/framework": "^8.65"
     "@inertiajs/inertia": "^0.10.0",
     "@inertiajs/inertia-vue3": "^0.5.1",
     "moment": "^2.29.1",

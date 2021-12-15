@@ -57,34 +57,36 @@
                             </div>
                         </div>
                     </div>
-                    <table id="tabela" class="w-full table-auto border-collapse">
+                    <table id="tabela" class="w-full border-collapse">
                         <thead class="bg-red-600 text-white">
-                        <tr>
-                            <th class="py-6 border border-black">ID</th>
-                            <th class="border border-black">Concurso</th>
-                            <th class="border border-black">Enunciado</th>
-                            <th class="border border-black">Dificuldade</th>
-                            <th class="border border-black">Tipo da Questão</th>
-                            <th class="border border-black">Disciplina</th>
-                            <th class="border border-black">Ações</th>
-                        </tr>
+                            <tr>
+                                <th class="py-6 border border-black h-5">ID</th>
+                                <th class="border border-black">Concurso</th>
+                                <th class="border border-black">Ano Concurso</th>
+                                <th class="border border-black">Enunciado</th>
+                                <th class="border border-black">Dificuldade</th>
+                                <th class="border border-black">Tipo da Questão</th>
+                                <th class="border border-black">Disciplina</th>
+                                <th class="border border-black">Ações</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="dadosQuestao in dadosQuestoes" :key="dadosQuestao.id">
-                            <td class="text-center py-4 border border-black">{{dadosQuestao.id}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.concurso.nome_concurso}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.pergunta}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.grau_dificuldade}}</td>
-                            <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
-                            <td class="text-center border border-black">
-                                <p v-for="disciplina in dadosQuestao.disciplinas">{{disciplina.nome_disciplina}}</p>
-                            </td>
-                            <td class="text-center border border-black">
-                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Visualizar</p>
-                                <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Editar</p>
-                                <p class="italic underline cursor-pointer text-blue-600" @click="handleDeletar(dadosQuestao)">Excluir</p>
-                            </td>
-                        </tr>
+                            <tr class="w-full" v-for="dadosQuestao in dadosQuestoes" :key="dadosQuestao.id">
+                                <td class="text-center py-4 border border-black">{{dadosQuestao.id}}</td>
+                                <td class="text-center border border-black">{{dadosQuestao.concurso.nome_concurso}}</td>
+                                <td class="text-center border border-black">{{formatarDataHora(dadosQuestao.concurso.data_realizacao)}}</td>
+                                <td class="w-1/3 h-8 text-center border border-black"><p class="max-w-lg truncate hover:text-clip">{{dadosQuestao.pergunta}}</p></td>
+                                <td class="text-center border border-black">{{dadosQuestao.grau_dificuldade}}</td>
+                                <td class="text-center border border-black">{{dadosQuestao.tipo_questao}}</td>
+                                <td class="text-center border border-black">
+                                    <p v-for="disciplina in dadosQuestao.disciplinas">{{disciplina.nome_disciplina}}</p>
+                                </td>
+                                <td class="text-center border border-black">
+                                    <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Visualizar</p>
+                                    <p class="italic underline cursor-pointer text-blue-600" @click="handleEditar(dadosQuestao)">Editar</p>
+                                    <p class="italic underline cursor-pointer text-blue-600" @click="handleDeletar(dadosQuestao)">Excluir</p>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <confirmation-modal :show="modal" :closeable="true">
@@ -115,7 +117,9 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import {Inertia} from "@inertiajs/inertia";
+import moment from "moment";
 
+moment.locale("pt-br");
 export default defineComponent({
     props: ['questoes', 'cursos', 'disciplinas', 'concursos'],
     components: {
@@ -139,6 +143,9 @@ export default defineComponent({
         }
     },
     methods: {
+        formatarDataHora(value) {
+            return moment(value).format("YYYY")
+        },
         async handlePesquisa() {
             return await axios.post(route('pesquisas.questoes'), this.formPesquisa)
                 .then((response) => {
@@ -182,3 +189,10 @@ export default defineComponent({
     },
 })
 </script>
+
+<style scoped>
+    .teste {
+        overflow-x: hidden;
+        text-overflow: ellipsis !important;
+    }
+</style>

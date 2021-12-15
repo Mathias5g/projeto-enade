@@ -5,6 +5,7 @@ use App\Http\Controllers\CursoController;
 use App\Http\Controllers\DisciplinaController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\QuestaoController;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +44,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
     Route::post('/pesquisa/concursos', [SearchController::class, 'concursos'])->name('pesquisas.concursos');
     Route::post('/pesquisa/disciplinas', [SearchController::class, 'disciplinas'])->name('pesquisas.disciplinas');
     Route::post('/pesquisa/cursos', [SearchController::class, 'cursos'])->name('pesquisas.cursos');
+
+    Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+    Route::post('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar');
 });

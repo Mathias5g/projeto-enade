@@ -12,22 +12,12 @@
                         <div class="flex flex-col w-full">
                             <!-- Navigation Links -->
                             <div class="flex flex-col mx-auto my-4">
-                                <h1 class="text-lg">Questões</h1>
-                                <jet-nav-link :href="route('questoes.create')" class="font-semibold">
-                                    - Incluir Questão
+                                <h1 class="text-lg">Cursos</h1>
+                                <jet-nav-link :href="route('cursos.create')" class="font-semibold">
+                                    - Incluir Curso
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('questoes.index')" class="font-semibold">
-                                    - Listar Questões
-                                </jet-nav-link>
-                            </div>
-
-                            <div class="flex flex-col mx-auto my-4">
-                                <h1 class="text-lg">Concursos</h1>
-                                <jet-nav-link :href="route('concursos.create')" class="font-semibold">
-                                    - Incluir Concurso
-                                </jet-nav-link>
-                                <jet-nav-link :href="route('concursos.index')" class="font-semibold">
-                                    - Listar Concursos
+                                <jet-nav-link :href="route('cursos.index')" class="font-semibold">
+                                    - Listar Cursos
                                 </jet-nav-link>
                             </div>
 
@@ -42,12 +32,29 @@
                             </div>
 
                             <div class="flex flex-col mx-auto my-4">
-                                <h1 class="text-lg">Cursos</h1>
-                                <jet-nav-link :href="route('cursos.create')" class="font-semibold">
-                                    - Incluir Curso
+                                <h1 class="text-lg">Concursos</h1>
+                                <jet-nav-link :href="route('concursos.create')" class="font-semibold">
+                                    - Incluir Concurso
                                 </jet-nav-link>
-                                <jet-nav-link :href="route('cursos.index')" class="font-semibold">
-                                    - Listar Cursos
+                                <jet-nav-link :href="route('concursos.index')" class="font-semibold">
+                                    - Listar Concursos
+                                </jet-nav-link>
+                            </div>
+
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Questões</h1>
+                                <jet-nav-link :href="route('questoes.create')" class="font-semibold">
+                                    - Incluir Questão
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('questoes.index')" class="font-semibold">
+                                    - Listar Questões
+                                </jet-nav-link>
+                            </div>
+
+                            <div class="flex flex-col mx-auto my-4">
+                                <h1 class="text-lg">Relatorios</h1>
+                                <jet-nav-link :href="route('relatorios.index')" class="font-semibold">
+                                    - Gerar Relatorio
                                 </jet-nav-link>
                             </div>
                         </div>
