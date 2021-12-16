@@ -47,4 +47,5 @@ Route::group(['middleware' => ['auth:sanctum', 'verified']], function() {
 
     Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
     Route::post('/relatorios/gerar', [RelatorioController::class, 'gerarRelatorio'])->name('relatorios.gerar');
+    Route::post('/relatorios/gerarpdf', [RelatorioController::class, 'gerarPdfRelatorio'])->name('relatorios.gerarpdf');
 });

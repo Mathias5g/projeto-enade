@@ -6,7 +6,10 @@ use App\Models\Concurso;
 use App\Models\Curso;
 use App\Models\Disciplina;
 use App\Models\Questao;
+use Barryvdh\DomPDF\Facade as PDF;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Inertia\Inertia;
 
 class RelatorioController extends Controller
@@ -58,5 +61,13 @@ class RelatorioController extends Controller
         $json = $questoes->paginate();
 
         return response()->json($json);
+    }
+
+    public function gerarPdfRelatorio(Request $request)
+    {
+        $date = new DateTime();
+        $questoes = $request->data;
+        $pdf = PDF::loadView('pdf_relatorio', compact('questoes'));
+        return $pdf->download('relatorio'. $date->getTimestamp() . '.pdf');
     }
 }

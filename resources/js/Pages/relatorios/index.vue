@@ -18,6 +18,8 @@
                             <div class="flex">
                                 <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold mr-2" @click="handlePesquisa">Pesquisar
                                 </button>
+                                <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handleExportarPdf">Exportar PDF
+                                </button>
                                 <button type="button" class="w-40 p-1 bg-red-600 text-white font-semibold" @click="handleResetarPesquisa">Resetar Filtros
                                 </button>
                             </div>
@@ -98,13 +100,16 @@ import {defineComponent} from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import ConfirmationModal from "@/Jetstream/ConfirmationModal";
 import moment from "moment";
+import {Inertia} from "@inertiajs/inertia";
+import { Link } from '@inertiajs/inertia-vue3'
 
 moment.locale("pt-br");
 export default defineComponent({
     props: ['questoes', 'cursos', 'disciplinas', 'concursos'],
     components: {
         AppLayout,
-        ConfirmationModal
+        ConfirmationModal,
+        Link
     },
     data: () => {
         return {
@@ -139,6 +144,25 @@ export default defineComponent({
                         return this.erro = true
                     }
                 })
+        },
+        handleExportarPdf() {
+            if(this.dadosQuestoes < 1) {
+                this.mensagemErro = 'Por favor gere um relatorio antes de exportar';
+                return this.erro = true
+            }
+            return axios.post(route('relatorios.gerarpdf'), {
+                data: this.dadosQuestoes
+            }, {
+                responseType: 'blob'
+            })
+            .then(res => {
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'file.pdf'); //or any other extension
+                document.body.appendChild(link);
+                link.click();
+            })
         },
         handleResetarPesquisa() {
             this.formPesquisa.concurso = null
